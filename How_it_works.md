@@ -38,9 +38,9 @@ As soon as a Stack has an enabled Job associated with it, it will be active and 
 
 **That's it!!!**
 
-##### [Previous Topic: What is Kragle?](./What_is_Kragle.md)
-
 ##### [Next Topic: The Basics - Stacks](./The_Basics/Stacks.md)
+
+##### [Previous Topic: What is Kragle?](./What_is_Kragle.md)
 
 ### [Back to Table of Contents](./README.md)
 
