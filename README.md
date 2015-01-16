@@ -21,12 +21,13 @@ Documentation for the Kragle.io api and site/service.
       1. Using Types which are valid for the web
     1. Actions requiring authentication/credentials
     1. Actions
+    1. State
+      1. Specifying initial state
+  1. Actions available for Block types
       1. uri_get, uri_head, uri_post
         1. _with_headers variants
       1. convert
       1. *more to come*
-    1. State
-      1. Specifying initial state
   1. Types are really just JSON Schema
     1. The Type schema
       1. The GUI Type schema
@@ -40,11 +41,11 @@ Documentation for the Kragle.io api and site/service.
     1. Source References
       1. Referencing arrays in the source
       1. Embedded Source References for strings
-    1. Conversion Functions
-      1. TIMESTAMP
-      1. URLENCODE
-      1. URLENCODE_PLUS
-      1. *more to come*
+  1. Conversion Functions
+    1. TIMESTAMP
+    1. URLENCODE
+    1. URLENCODE_PLUS
+    1. *more to come*
 1. API Reference
   1. Login
   1. Blocks
