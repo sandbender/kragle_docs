@@ -46,4 +46,31 @@ is called a Stack. Here are some Stack examples..
 - Stacks can be configured to **not** run automatically, but instead can be
   be run directly by you OR as a url that only runs when accessed
 
+#### Am I limited to using only the sites/services for which you already have support?
+##### Can I connect Kragle to my own website/service/app/server/etc, or a 3rd party service which isn't already listed on your site?
+
+No, and Yes, respectively :) While it requires some technical knowledge, **any** user is able
+to add support for new sites/apps/etc with **no interaction required** from the Kragle team.
+Our system supports this feature natively, and was a core requirement when we initially built
+Kragle - we want the entire system to be as flexible as possible and to encourage the
+community to add new action types and share them with others, etc.
+
+The only time Kragle involvement is required is if/when a site or service requires some form
+of authorization (ie: logging in/granting permission/etc) for the operation a Kragle stack is
+going to perform. In this situation, we are automatically notified that a new action type has
+been created which requires authentication, and we will immediately add the appropriate support.
+
+(*Technical details: Simple auth types are already built-in, so if for example the service you
+with to connect to uses HTTP Basic authentication, this is already available and configurable
+by an end-user when creating a new action type.
+
+For more complicated scenarios, we have pluggable auth support and an extensive system for
+adding OAuth support for new services. What this means is that in most cases, if you add a new
+action that talks to a site requiring OAuth or some other non-trivial authentication, we will
+add support for it immediately (as soon as we're notified that new auth support is required,
+which will happen automatically). Adding the new support, due to the pluggable auth system in
+use on our back-end, can typically be done in less than an hour (usually **much** less), and our
+commitment is to complete any new auth support in less than 24 hours from the time we're
+notified*)
+
 ##### [Next Topic: How it works](./How_it_works.md)
