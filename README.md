@@ -4,12 +4,17 @@ Documentation for the Kragle.io api and site/service.
 ### Table of Contents
 
 1. [What is Kragle?](./What_is_Kragle.md)
+  1. Explanation
+  1. Examples
+  1. FAQ
 1. [How it works](./How_it_works.md)
+  1. A Tiny bit of terminology
+  1. Creating "Stacks"
+  1. Creating "Jobs"
 1. [The Basics](../../tree/master/The_Basics)
   1. [Stacks](./The_Basics/Stacks.md)
   1. [Blocks](./The_Basics/Blocks.md)
     1. Access/Authentication - How Kragle talks to your apps
-    1. Types
   1. [Jobs](./The_Basics/Jobs.md)
   1. [Sharing Stacks](./The_Basics/Sharing_Stacks.md)
 1. [Advanced Topics](../../tree/master/Advanced_Topics)
