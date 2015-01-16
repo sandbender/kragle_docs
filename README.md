@@ -12,8 +12,8 @@ Documentation for the Kragle.io api and site/service.
     1. Types
   1. [Jobs](./The_Basics/Jobs.md)
   1. [Sharing Stacks](./The_Basics/Sharing_Stacks.md)
-1. Advanced Topics
-  1. Creating your own Block types
+1. [Advanced Topics](../../tree/master/Advanced_Topics)
+  1. [Creating your own Block types](./Advanced_Topics/Creating_Block_Types.md)
     1. Sharing your custom Block types
     1. Remote types (ie: definitions hosted elsewhere)
     1. The Block Type schema
@@ -23,38 +23,38 @@ Documentation for the Kragle.io api and site/service.
     1. Actions
     1. State
       1. Specifying initial state
-  1. Actions available for Block types
+  1. [Actions available for Block types](./Advanced_Topics/Actions_for_Block_Types.md)
       1. uri_get, uri_head, uri_post
         1. _with_headers variants
       1. convert
       1. *more to come*
-  1. Types are really just JSON Schema
+  1. [Types are really just JSON Schema](./Advanced_Topics/Types.md)
     1. The Type schema
       1. The GUI Type schema
     1. The Block schema
-  1. Creating your own Types
+  1. [Creating your own Types](./Advanced_Topics/Creating_Types.md)
     1. Sharing your custom Types
     1. Remote types (ie: definitions hosted elsewhere)
-  1. Webhooks and Manually Triggered Stacks
-1. API-specific Topics
-  1. Conversion specifiers
+  1. [Webhooks and Manually Triggered Stacks](./Advanced_Topics/Webhooks.md)
+1. [API-specific Topics](../../tree/master/API-specific_Topics)
+  1. [Conversion Specifiers](./API-specific_Topics/Conversion_Specifiers.md)
     1. Source References
       1. Referencing arrays in the source
       1. Embedded Source References for strings
-  1. Conversion Functions
+  1. [Conversion Functions](./API-specific_Topics/Conversion_Functions.md)
     1. TIMESTAMP
     1. URLENCODE
     1. URLENCODE_PLUS
     1. *more to come*
-1. API Reference
-  1. Login
-  1. Blocks
-  1. Types
-  1. Stacks
-  1. Jobs
-  1. Schedules
-  1. Validation
-  1. Conversion
-  1. Triggering manual stacks (webhooks)
-  1. Non-OAuth access management (HTTP Basic, etc)
+1. [API Reference](../../tree/master/API_Reference)
+  1. [Login](./API_Reference/Login.md)
+  1. [Blocks](./API_Reference/Blocks.md)
+  1. [Types](./API_Reference/Types.md)
+  1. [Stacks](./API_Reference/Stacks.md)
+  1. [Jobs](./API_Reference/Jobs.md)
+  1. [Schedules](./API_Reference/Schedules.md)
+  1. [Validation](./API_Reference/Validation.md)
+  1. [Conversion](./API_Reference/Conversion.md)
+  1. [Triggering manual stacks (webhooks)](./API_Reference/Webhooks.md)
+  1. [Non-OAuth access management (HTTP Basic, etc)](./API_Reference/Access_Mgmt.md)
 
