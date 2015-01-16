@@ -74,3 +74,5 @@ commitment is to complete any new auth support in less than 24 hours from the ti
 notified*)
 
 ##### [Next Topic: How it works](./How_it_works.md)
+
+### [Back to Table of Contents](./README.md)
