@@ -2,6 +2,8 @@
 
 ### [Table of Contents](./README.md)
 
+##### [Next Topic: How it works](./How_it_works.md)
+
 ## What is Kragle?
 
 Kragle is a service that lets you automate actions between sites, services and apps.
@@ -43,3 +45,5 @@ is called a Stack. Here are some Stack examples..
 - Stacks can also be setup to run only one, at a specific time on a certain day
 - Stacks can be configured to **not** run automatically, but instead can be 
   be run directly by you OR as a url that only runs when accessed
+
+##### [Next Topic: How it works](./How_it_works.md)
