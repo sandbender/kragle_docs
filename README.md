@@ -5,7 +5,7 @@ Documentation for the Kragle.io api and site/service.
 
 1. [What is Kragle?](./What_is_Kragle.md)
 1. [How it works](./How_it_works.md)
-1. The Basics
+1. [The Basics](./The_Basics)
   1. [Stacks](./The_Basics/Stacks.md)
   1. [Blocks](./The_Basics/Blocks.md)
     1. Access/Authentication - How Kragle talks to your apps
