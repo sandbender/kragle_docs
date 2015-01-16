@@ -27,7 +27,7 @@ is called a Stack. Here are some Stack examples..
 
 #### Stacks are **not** limited to just two actions
 
-- use Kragle to post a message to LinkedIn, Facebook and Twitter all at the same time
+- use Kragle to post a *message* to **LinkedIn, Facebook and Twitter** all at the same time
 - copy an **Epicurious** *recipe* to an **Evernote** *notebook* when you favourite it, and  
   then create a **Google Calendar** *event* for dinner tonight with a *link* to the recipe
 
@@ -43,7 +43,7 @@ is called a Stack. Here are some Stack examples..
 - Stacks on a recurring basis by default (every 5 or 15 minutes, etc)
 - Stacks can be setup to run at a certain time instead of every X minutes
 - Stacks can also be setup to run only one, at a specific time on a certain day
-- Stacks can be configured to **not** run automatically, but instead can be 
+- Stacks can be configured to **not** run automatically, but instead can be
   be run directly by you OR as a url that only runs when accessed
 
 ##### [Next Topic: How it works](./How_it_works.md)
