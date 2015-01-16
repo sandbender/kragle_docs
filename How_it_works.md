@@ -12,7 +12,7 @@
 
 - A single action that can be performed by Kragle is called a *Block*
 - A set of *Blocks* that have been glued together is called a *Stack*
-- A *Stack* can have one or more (or zero) *Jobs* associated with it, which indicate when/how often the *Stack* is to be run.
+- A *Job* indicates when or how often a *Stack* is to be run. (A *Stack* can have one or more, or zero, *Jobs* associated with it)
 
 ### Creating your Stacks
 
@@ -23,13 +23,20 @@ select the *"New Tweet matching Hashtag..."* Block, you will need to fill in the
 
 Once you have your first Block setup, you select another Block to stack onto the end of the first, and configure it the same way.
 
-When configuring a Block that is stacked on the 'end' of another one, the information that the other one produces will be available
-for you to use when configuring the current Block. For example, if you stack the *"Retweet"* block on the end of *"New Tweet matching Hashtag..."* block, configuring *"Retweet"* will require you to provide the id of the tweet you want to retweet from your account. The *"New Tweet matching Hashtag..."* block provides (among a few other things) the id of the tweet it found, and the system will give you a placeholder
-that you can select/use when filling out the 'id' configuration for *"Retweet"*.
-
 You then proceed with adding more blocks to the stack, or stop there if you are finished.
 
-It is **important** to note here that blocks are run in the order you stack them. The first block is run first, and it sends it's information to the second, which is run next and sends it's information to the third, and so on. Block A -> Block B -> Block C is a different stack and will work/be configured/etc differently from a Stack made up of Block C -> Block A -> Block B.*
+### Creating Jobs - Setting your Stacks to run
+
+Once you have a Stack created, you need to turn it on by creating a Job for it.
+
+Creating a Job for a stack simply requires choosing from the available list of predefined schedules (every 5 mins, etc), or
+filling in the details of when you want it to run (Tuesdays at 8pm, etc).
+
+After filling in the details for the Job, you can set it to enabled or disabled (on/off).
+
+As soon as a Stack has an enabled Job associated with it, it will be active and will start running according to the specified schedule.
+
+**That's it!!!**
 
 ##### [Previous Topic: What is Kragle?](./What_is_Kragle.md)
 
