@@ -17,6 +17,7 @@ Documentation for the Kragle.io api and site/service.
     1. Access/Authentication - How Kragle talks to your apps
   1. [Jobs](./The_Basics/Jobs.md)
   1. [Sharing Stacks](./The_Basics/Sharing_Stacks.md)
+1. [Limits](./Limits.md)
 1. [Advanced Topics](../../tree/master/Advanced_Topics)
   1. [Creating your own Block types](./Advanced_Topics/Creating_Block_Types.md)
     1. Sharing your custom Block types
