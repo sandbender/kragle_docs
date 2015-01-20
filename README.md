@@ -63,4 +63,5 @@ Documentation for the Kragle.io api and site/service.
   1. [Conversion](./API_Reference/Conversion.md)
   1. [Triggering manual stacks (webhooks)](./API_Reference/Webhooks.md)
   1. [Non-OAuth access management (HTTP Basic, etc)](./API_Reference/Access_Mgmt.md)
+  1. [Faults and Error Codes](./API_Reference/Faults.md)
 
