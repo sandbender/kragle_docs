@@ -4,7 +4,7 @@
 
 ##### [Previous Topic: The Basics](../../tree/master/The_Basics)
 
-##### [Next Topic: Advanced Topics](../../tree/master/Advanced_Topics)
+##### [Next Topic: Limits](./Available_Blocks)
 
 ## Limits
 
@@ -30,7 +30,7 @@ The 'One Megabyte' limit also applies to any State saved by your Stacks; the tot
 
 There are no limits on the number of active, inactive or total Blocks used by your account, nor is there any limit on the number of Stacks you have defined or the number of Blocks per Stack, etc. The only limit on Stacks and Blocks is the monthly # of Block executions per account.
 
-##### [Next Topic: Advanced Topics](../../tree/master/Advanced_Topics)
+##### [Next Topic: Limits](./Available_Blocks)
 
 ##### [Previous Topic: The Basics](../../tree/master/The_Basics)
 
