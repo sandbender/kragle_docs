@@ -4,13 +4,13 @@
 
 ##### [Previous Topic: Limits](./Limits.md)
 
-##### [Next Topic: Advanced Topics](../../tree/master/Available_Topics)
+##### [Next Topic: Advanced Topics](../../tree/master/Advanced_Topics)
 
 ## Available Blocks
 
 Content starts here.
 
-##### [Next Topic: Advanced Topics](../../tree/master/Available_Topics)
+##### [Next Topic: Advanced Topics](../../tree/master/Advanced_Topics)
 
 ##### [Previous Topic: Limits](./Limits.md)
 
