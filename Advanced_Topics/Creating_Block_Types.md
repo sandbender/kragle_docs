@@ -92,7 +92,114 @@ Note that this does **not** apply to API usage - any Type can be usable as input
 
 ### Actions
 
+Actions are the heart of a Block - essentially a Block is just a sequence of Actions, with some added functionality to support input and output validation, state information, etc.
 
+Each action receives input conforming to a specific structure, performs a single action, and (possibly) outputs some data.
+
+The most common Actions you'll use all the time when building custom Block types are uri-oriented action (uri_get, uri_post, etc) and the 'convert' action, which you'll use to transform the 'raw' response from a url/api endpoint into the appropriate structure for a Kragle Type. (*The 'convert' action is very useful and comes into play in a few other places as well, most notably when using the API to create your Stacks.*)
+
+The Actions which make up a Block are specified as an ordered list (array), and each different action type available will have it's own set of required and optional parameters it needs to be configured with when using it to build a Block.
+
+For example, if you're using the 'uri_get' action in a Block, you will need to specify the uri in question which the action will GET via an HTTP request, etc.
+
+#### The Action input structure
+
+You will often want or need to use data present in the input to a Block in various spots in your actions. This is supported via the
+'convert' process/action mentioned above. When specifying the parameters for an Action, you can use special placeholders which reference
+input data, which will be automatically replaced at runtime through the 'convert' mechanism.
+
+Full details on how the 'convert' mechanism works are provided later under the API-specific Topic [Conversion Specifiers](../API-specific_Topics/Conversion_Specifiers.md). For now, we'll describe the input structure that every Action can reference via these placeholders:
+
+```json
+{
+    "input": <THE INPUT>,
+    "input_state": <INPUT STATE FROM THE LAST RUN>,
+    "output_state": <OUTPUT STATE FROM THE LAST RUN>
+```
+
+##### THE INPUT
+
+This element corresponds to whatever data structure the previous Block in the STack (if this is the first Action in a Block) or previous Action in the Block (all subsequent Actions in the Block) produced as output.
+
+##### INPUT STATE FROM THE LAST RUN
+
+This element will correspond to the 'input' state structure which was saved the last time this Block **instance** executed. Note that there's a difference between an instance of a Block (ie: a "copy" of a Block that is part of an active Stack) and the Block itself (a type which is not specific to a stack/etc).
+
+See the State section below for more details.
+
+##### OUTPUT STATE FROM THE LAST RUN
+
+Like the corresponding 'input_state' element, 'output_state' provides the data structure saved as the output state from the last time this Block **instance** executed.
+
+#### Actions requiring authentication/credentials
+
+Some Actions (typically the uri_* family of Actions) may require authentication or access credentials (username/password) depending on
+the uri you specify. In these cases, you will be able to provide the basic details as parameters to those actions. The two required parameters for auth to work are 'auth_required' (a boolean, ie: either true or false) and 'auth_type' (one of the predefined types, currently only 'basic' and 'strategy' are supported).
+
+The 'strategy' auth type indicates that Kragle should use an OAuth strategy to access this url. It is **not** required that you provide
+any other details - Kragle has a pluggable auth system and will automatically figure out the mechanism required to obtain the appropriate access token(s)/etc. If you specify a url for which we do not already have explicit support, it will be added - the pluggable auth system makes this fast, and we can (and **will**) typically add the needed support within 24 hours of you creating the Block which uses this auth type (we are automatically notified whenever a new Block type is created which requires new auth support).
+
+The 'basic' auth type indicates HTTP Basic authorization should be used - you will be able to provide your Basic auth creds for this uri separately via an API endpoint which provides the ability to manage your auth credentials for various uris.
+
+**NB**: HTTP Basic auth is highly discouraged - the vast majority of public sites & services today use some variant of OAuth - much more secure and configurable access-wise than something simple like HTTP Basic.
+
+### State
+
+You will often want to save data in between executions of a Stack. For example, when searching for hashtag results from Twitter you will likely only want results that are new since the last time the Stack in question was run, and so you may want to save the post ID of the most recent tweet your stack has seen and use that to restrict your results next time.
+
+Kragle supports saving such State data in between executions of a Block/Stack.
+
+State is saved on a per-Block-instance basis, so you could theoretically have two copies of the same Block type within a single Stack, and each would save it's own state data separately.
+
+Just like action parameters, the State structure you specify uses the 'convert' mechanism to replace placeholders in the structure with corresponding data from the input or output of a block.
+
+Any placeholders in the 'input' section of your state structure will be replaced with the corresponding elements from whatever structure was the 'raw' input to the block. Likewise, any placeholders in the 'output' section of your state structure will be replaced with the corresponding elements from whatever data structure was output by this block.
+
+An example will be helpful here. Let's assume the following imaginary structure represents Twitter hashtag search results:
+
+```json
+{
+    "tweets": [
+        {"body": "this is a twitter post (tweet) #cats", "owner_screen_name": "SandbenderCa"},
+        {"body": "Look, a cat picture! bit.ly/ABCDE #cats", "owner_screen_name": "SandbenderCa"}
+    ],
+    "last_tweet_id_in_results": 1234567
+}
+```
+
+We could save the id of the last tweet, for use next time in the params for our uri_get Action which retrieves such results, by
+specifying the following State structure in the Block definition:
+
+```json
+{
+    "input": {},
+    "output": {
+        "last_tweet_id": <'convert' placeholder pointing to last_tweet_id_in_results>
+    }
+}
+```
+
+In which case, the next time this Block instance ran, we would get something like this as the input structure to the same Action:
+
+```json
+{
+    "input": <some input>,
+    "input_state": {},
+    "output_state": {"last_tweet_id": 1234567}
+}
+```
+
+... which we could then use when crafting the uri for this Action that will pull **recent** hashtag search results, etc.
+
+#### Specifying initial state
+
+When creating custom Blocks that use State, you will need to specify the initial state for the Block which will be used the first
+time the block runs, so that there is data there for it to reference when it looks for the relevant pieces of State.
+
+This is done with the 'initial_state' element of a Block definition... 'initial_state' is a **static** data structure (can be anything) which is saved as the starting state for a Block every time the block is used in a Stack.
+
+State always over-writes itself on every Block execution, so the initial state is **only** used/relevant the very first time an
+instance of the Block is executed within a Stack.
 
 ##### [Next Topic: Actions available for Block types](./Actions_for_Block_Types.md)
 
