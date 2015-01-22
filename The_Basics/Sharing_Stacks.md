@@ -27,7 +27,7 @@ will use access credentials tied to *your* account. When someone **else** uses t
 
 ### What about Block configuration - I don't want other users seeing my hashtag search for Topic X when they copy my Stack?
 
-Not to worry... all configuration information for Blocks in a Stack is tied to that specific copy of the Stack. When you share a
+Not to worry... all configuration information for Blocks in a Stack is tied to that specific **copy** of the Stack. When you share a
 stack, you are **not** sharing the specific configuration you have setup, just the **structure** of the stack itself. When another
 user copies a stack you've shared, they'll need to fill out their own specific configuration for that stack before they can use it,
 since that will be empty when the first copy it and will **not** be copied from yours.

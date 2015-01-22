@@ -10,6 +10,8 @@
 
 There are various limits imposed on the resources that your Stacks will require, which are explained here.
 
+##### NB: Kragle is still in beta at this time... Limits on accounts can and will likely change before the service is public and/or fully-launched. Also note that during beta, all limits will likely remain disabled/not enforced as we evaluate usage patterns 'in the wild' and determine whether or not the proposed limits are acceptable/etc.
+
 #### Maximum # of Block executions per month
 
 This limit is dictated by the type of account you have. Free accounts are **currently** limited to 150,000 individual Block executions per month.
