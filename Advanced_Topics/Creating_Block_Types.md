@@ -50,7 +50,49 @@ fetch fresh versions of your definition from the url, even if you change the def
 
 ### The Block type schema (JSON Schema)
 
-Kragle relies 
+Kragle relies heavily on JSON Schema for validation different things.
+
+One such usage is to validate a custom Block type definition. We'll discuss the individual pieces that make up a Block type
+definition in the sections below, but the complete JSON Schema against which a Block type definition must validate is located
+here: https://raw.githubusercontent.com/sandbender/json_schema/master/block_type.json
+
+### Input and Output types for a Block type definition
+
+All Block types must specify the input and output Types which they expect/produce. There are a number of different reasons for
+this but the most basic/obvious is so that the system, when connecting Blocks into a Stack, knows how to perform translation
+between the kind of data one Block produces, and the kind of data a connected Block expects.
+
+Types are specified by their Kragle name, which in turn corresponds to a JSON Schema describing the format of the data
+structure for that Type.
+
+Blocks can receive either a single instance of a Type of data, or an array of the given Type (or nothing) as input.
+
+If a Block is specified as having nothing (null) as it's input, then it **ignores** any input which may or may not be present.
+This means that any data which the previous Block potentially produces is ignored, and will **not** be validated as anything is
+theoretically valid. Also, this means that you should **not** reference any input data in the actions of the block definition, 
+since the input is not validated and therefore any referenced input may not be present when an instance of the Block runs.
+
+Likewise, Blocks can produce either a single Type, an array of instances of a Type, or nothing (null).
+
+Treatment of null as the output type works the same way as input - any output which may be produced is not validated and therefore
+"unsafe" for usage in subsequent blocks/etc.
+
+Generally speaking you'll always want to specify non-null input and output types - the only time you'll want to use null is
+when a Block does not need any input, or when it actually produces nothing.
+
+#### Using input Types which are valid for the web
+
+If you are creating a block that you want to share and allow others to use on the web (ie: through the Kragle.io site/app), the
+Type you specify must themselves validate against a restricted JSON Schema - basically, a Type used as input for a Block must not
+contain any arrays - only regular (nested is ok) objects or scalars.
+
+The JSON Schema against which a web-usable Type must validate is located here: https://raw.githubusercontent.com/sandbender/json_schema/master/data_type_gui.json
+
+Note that this does **not** apply to API usage - any Type can be usable as input to a Block when that Block is being used through the Kragle.io api to create stacks/etc, since API-created stacks must explicitly provide a conversion "map" for input and therefore are not encumbered by UI/UX restrictions which are the reason for this rule.
+
+### Actions
+
+
 
 ##### [Next Topic: Actions available for Block types](./Actions_for_Block_Types.md)
 

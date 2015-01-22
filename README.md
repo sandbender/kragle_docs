@@ -26,8 +26,9 @@ Documentation for the Kragle.io api and site/service.
     1. The Block Type schema
     1. Specifying input and output Types
       1. Using Types which are valid for the web
-    1. Actions requiring authentication/credentials
     1. Actions
+      1. The Action input structure
+      1. Actions requiring authentication/credentials
     1. State
       1. Specifying initial state
   1. [Actions available for Block types](./Advanced_Topics/Actions_for_Block_Types.md)
