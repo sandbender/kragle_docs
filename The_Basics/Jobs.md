@@ -30,6 +30,12 @@ Alternately, instead of 'every # minutes', you can create jobs which will run da
 
 One-time and Scheduled Jobs will count towards the usual monthly allowance for total number of block executions.
 
+### Running Stacks manually or via the web ("Webhooks")
+
+Stacks can also be run directly through the web interface (*coming soon*), or via the unique url assigned to the stack.
+
+See the [Advanced Topics - Webhooks and Manually Triggered Stacks](../Advanced_Topics/Webhooks.md) section for more details.
+
 ##### [Next Topic: The Basics - Sharing Stacks](./Sharing_Stacks.md)
 
 ##### [Previous Topic: The Basics - Blocks](./Blocks.md)
