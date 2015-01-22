@@ -43,6 +43,7 @@ Documentation for the Kragle.io api and site/service.
     1. Sharing your custom Types
     1. Remote types (ie: definitions hosted elsewhere)
   1. [Webhooks and Manually Triggered Stacks](./Advanced_Topics/Webhooks.md)
+1. [Links (Relevant external docs, ie: JSON Schema, etc)](./Links.md)
 1. [API-specific Topics](../../tree/master/API-specific_Topics)
   1. [Conversion Specifiers](./API-specific_Topics/Conversion_Specifiers.md)
     1. Source References
