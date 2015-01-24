@@ -1,0 +1,37 @@
+# Kragle.io Documentation
+
+### [Table of Contents](../README.md)
+
+##### [Previous Topic: Creating your own Block types](./Creating_Block_Types.md)
+
+##### [Next Topic: Types are really just JSON Schema](./Types.md)
+
+## Actions available for Block types
+
+The following list details all the currently available actions for use in a Block type definition, along with their lists of required/optional parameters, etc.
+
+#### uri_get, uri_head, uri_post
+
+These actions are used to GET, HEAD and POST to/from a given url, respectively.
+
+Required Params:
+- uri - string - The uri you with to access via the HTTP verb in question. 
+
+Optional Params:
+- headers - object - An object representing HTTP headers to send with the request, where keys are header names and values are the header values. Values must be strings. Default: `{}`.
+- response_type - string (enum) - One of 'string' or 'json'. If 'string', the response body will be returned as a raw string. If 'json', the body will be parsed as json and the resulting object returned. Default: 'string'.
+- body - string - **Ony valid for uri_post**. The body to POST to the url with the request. Default: no body is sent (null string).
+- auth_required - boolean - Indicates that the request will require some form of authentication. Default: 'false'.
+- auth_type - string (enum) - One of 'strategy' or 'basic'. **No default.**
+
+Dependencies/Etc:
+- If 'auth_required' is present, 'auth_type' must also be present.
+
+Return Value: The appropriate representation of the response body, based on the 'response_type' param.
+
+##### [Next Topic: Types are really just JSON Schema](./Types.md)
+
+##### [Previous Topic: Creating your own Block types](./Creating_Block_Types.md)
+
+### [Back to Table of Contents](../README.md)
+

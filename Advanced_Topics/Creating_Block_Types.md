@@ -56,6 +56,21 @@ One such usage is to validate a custom Block type definition. We'll discuss the 
 definition in the sections below, but the complete JSON Schema against which a Block type definition must validate is located
 here: https://raw.githubusercontent.com/sandbender/json_schema/master/block_type.json
 
+### How to create a custom Block type
+
+You must use Kragle's JSON API in order to create your own block types. The 'definition' element of the object you POST to the blocktypes endpoint to create a block describes the various elements that make up a Block type. The Definition of a Block type must contain:
+
+1. An element called 'io' which indicates what Types of data a Block accepts and produces,
+1. An element called 'actions' which specifies the list of actions to be performed by the block,
+1. An element called 'state' which specifies the data to be saved on each execution of the block, and
+1. An element called 'initial_state' which is used to initialize an individual Block's state when it is created as part of a Stack
+
+In addition to the 'definition' of a Block, you'll also need to specify a few other pieces of information for your new Block:
+
+1. The 'name' of your block - this needs to be unique.
+1. Optional: 'is_remote' is a boolean indicating that the 'definition' is a url where the actual definition can be fetched.
+1. Optional: 'needs_approval' is a boolean indicating that you wish to flag (if true) the custom Block for review and public availability.
+
 ### Input and Output types for a Block type definition
 
 All Block types must specify the input and output Types which they expect/produce. There are a number of different reasons for
@@ -63,7 +78,7 @@ this but the most basic/obvious is so that the system, when connecting Blocks in
 between the kind of data one Block produces, and the kind of data a connected Block expects.
 
 Types are specified by their Kragle name, which in turn corresponds to a JSON Schema describing the format of the data
-structure for that Type.
+structure for that Type. In a Block 'definition' structure, the input and output types are specified in the 'io' top-level element of the 'definition'. The 'io' element is an object with two elements, 'input' and 'output', which are described below.
 
 Blocks can receive either a single instance of a Type of data, or an array of the given Type (or nothing) as input.
 
@@ -98,9 +113,7 @@ Each action receives input conforming to a specific structure, performs a single
 
 The most common Actions you'll use all the time when building custom Block types are uri-oriented action (uri_get, uri_post, etc) and the 'convert' action, which you'll use to transform the 'raw' response from a url/api endpoint into the appropriate structure for a Kragle Type. (*The 'convert' action is very useful and comes into play in a few other places as well, most notably when using the API to create your Stacks.*)
 
-The Actions which make up a Block are specified as an ordered list (array), and each different action type available will have it's own set of required and optional parameters it needs to be configured with when using it to build a Block.
-
-For example, if you're using the 'uri_get' action in a Block, you will need to specify the uri in question which the action will GET via an HTTP request, etc.
+The Actions which make up a Block are specified as an ordered list (array), and each different action type available will have it's own set of required and optional parameters it needs to be configured with when using it to build a Block. The list of Actions for a block is specified as the 'actions' top-level element of your block definition structure. Each element in the 'actions' list must be an object having two elements: 'action' (the name of the action to use) and 'action_params' (an object whose elements are the required/optional parameters for the action in question).
 
 #### The Action input structure
 
@@ -151,6 +164,8 @@ Kragle supports saving such State data in between executions of a Block/Stack.
 
 State is saved on a per-Block-instance basis, so you could theoretically have two copies of the same Block type within a single Stack, and each would save it's own state data separately.
 
+The 'state' structure (a top level element of your Block's 'definition' structure) is used to specify what data from the input or output of the block you wish to save for use during the next execution of the Block. ('state' structure is described below)
+
 Just like action parameters, the State structure you specify uses the 'convert' mechanism to replace placeholders in the structure with corresponding data from the input or output of a block.
 
 Any placeholders in the 'input' section of your state structure will be replaced with the corresponding elements from whatever structure was the 'raw' input to the block. Likewise, any placeholders in the 'output' section of your state structure will be replaced with the corresponding elements from whatever data structure was output by this block.
@@ -196,7 +211,7 @@ In which case, the next time this Block instance ran, we would get something lik
 When creating custom Blocks that use State, you will need to specify the initial state for the Block which will be used the first
 time the block runs, so that there is data there for it to reference when it looks for the relevant pieces of State.
 
-This is done with the 'initial_state' element of a Block definition... 'initial_state' is a **static** data structure (can be anything) which is saved as the starting state for a Block every time the block is used in a Stack.
+This is done with the 'initial_state' element of a Block definition... 'initial_state' is a **static** data structure which is saved as the starting state for a Block every time the block is used in a Stack. The 'initial_state' element of a block definition must be an object, have 'input' and 'output' properties. Each of 'input' and 'output' must be objects themselves, and their contents can be anything.
 
 State always over-writes itself on every Block execution, so the initial state is **only** used/relevant the very first time an
 instance of the Block is executed within a Stack.
