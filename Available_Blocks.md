@@ -4,7 +4,7 @@
 
 ##### [Previous Topic: Limits](./Limits.md)
 
-##### [Next Topic: Advanced Topics](../../tree/master/Advanced_Topics)
+##### [Next Topic: Available Types](./Available_Types.md)
 
 ## Available Blocks
 
@@ -22,7 +22,7 @@ category which lists blocks that are not site-specific/"internal" (ie: things li
 
 ### Twitter
 
-##### [Next Topic: Advanced Topics](../../tree/master/Advanced_Topics)
+##### [Next Topic: Available Types](./Available_Types.md)
 
 ##### [Previous Topic: Limits](./Limits.md)
 

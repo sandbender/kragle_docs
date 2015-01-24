@@ -2,7 +2,7 @@
 
 ### [Table of Contents](../README.md)
 
-##### [Previous Topic: Available Blocks](../Available_Blocks.md)
+##### [Previous Topic: Available Types](../Available_Types.md)
 
 ##### [Next Topic: Actions available for Block types](./Actions_for_Block_Types.md)
 
@@ -218,7 +218,7 @@ instance of the Block is executed within a Stack.
 
 ##### [Next Topic: Actions available for Block types](./Actions_for_Block_Types.md)
 
-##### [Previous Topic: Available Blocks](../Available_Blocks.md)
+##### [Previous Topic: Available Types](../Available_Types.md)
 
 ### [Back to Table of Contents](../README.md)
 
