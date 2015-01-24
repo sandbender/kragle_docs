@@ -29,6 +29,21 @@ Dependencies/Etc:
 
 Return Value: The appropriate representation of the response body, based on the 'response_type' param.
 
+#### uri_get_with_headers, uri_head_with_headers, uri_post_with_headers
+
+These actions mirror the non _with_headers versions exactly, with the exception that they return the response headers of the request along with the body, and so the return value is an object containing both body and headers, instead of the body itself.
+
+Return Value: An object such as the following, with the value of 'body' dependent upon the 'response_type' param...
+```
+{
+  "headers": {
+    "header_name_one": "value for header_name_one",
+    ...
+  },
+  "body": <body value>
+}
+```
+
 ##### [Next Topic: Types are really just JSON Schema](./Types.md)
 
 ##### [Previous Topic: Creating your own Block types](./Creating_Block_Types.md)
