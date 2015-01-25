@@ -172,7 +172,7 @@ It is **important to note** that you can nest array references - ie: inside the 
 
 At the top level of a conversion specifier, ie: without already having entered an array reference, the 'local root' is implied to be the same as the actual root of 'source' - that is, the path of a non-nested array reference **always** refers to the root of a 'source' structure, while a nested array reference is **always** relative to the current array element being converted.
 
-Because of this, you can process per-element conversions where the 'source' structure is itself an array, however you cannot create any 'recursion' while processing a conversion - an array reference **can only point to a value which is *contained in* the *current root* **.
+Because of this, you can process per-element conversions where the 'source' structure is itself an array, however you cannot create any 'recursion' while processing a conversion - an array reference **can only point to a value which is _contained in_ the _current root_ **.
 
 ##### [Next Topic: Conversion Functions](./Conversion_Functions.md)
 
