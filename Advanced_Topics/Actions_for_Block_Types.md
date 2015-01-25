@@ -44,6 +44,25 @@ Return Value: An object such as the following, with the value of 'body' dependen
 }
 ```
 
+#### convert
+
+The 'convert' action is a highly flexible mechanism for converting one arbitrary data structure into another based on an input structure.
+
+The input to the action (ie: output from previous Action/Block) will be used as the 'source' data for the conversion, and the 'conversion' parameter to this action will be the structure to convert based on the input.
+
+(See the [API-specific Topics: Conversion Specifiers](../API-specific_Topics/Conversion_Specifiers.md) section for full details on how this works.)
+
+Required Params:
+- conversion - object/array/string/null - The structure to convert.
+
+Optional Params:
+- None
+
+Dependencies/Etc:
+- None
+
+Return Value: The result of applying the input to the conversion structure, ie: the resulting data structure.
+
 ##### [Next Topic: Types are really just JSON Schema](./Types.md)
 
 ##### [Previous Topic: Creating your own Block types](./Creating_Block_Types.md)
