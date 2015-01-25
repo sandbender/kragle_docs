@@ -164,7 +164,15 @@ The conversion will result in the following structure:
 
 ### Local vs. Root references
 
+In the example above, you may have noticed that the path for the 'id' element starts with **two** slashes (`//`), while the path for 'timestamp' starts with the usual *single* slash. This is significant - the double-slashes indicates a reference relative to the 'local root'... inside an array reference, the 'local root' is the current element of the array we're referencing. Conversely, the single slash prefix on a path indicates that the path is 'absolute' (or a 'root' reference, as opposed to 'local')... ie: this path is relative to the root of the whole 'source' data structure.
 
+It is **important to note** that you can nest array references - ie: inside the conversion specifier for each element of the array you're referencing, you can have further array references.
+
+**However**... the path of an array reference **always** refers to a 'local' path, ie: relative to the current array element, regardless of the number of slashes it begins with... when used as an array reference, `"/path"` and `"//path"` **both** refer to the 'path' value in the current array element being processed, even though the former only has a single slash and would normally refer to a 'root' reference.
+
+At the top level of a conversion specifier, ie: without already having entered an array reference, the 'local root' is implied to be the same as the actual root of 'source' - that is, the path of a non-nested array reference **always** refers to the root of a 'source' structure, while a nested array reference is **always** relative to the current array element being converted.
+
+Because of this, you can process per-element conversions where the 'source' structure is itself an array, however you cannot create any 'recursion' while processing a conversion - an array reference **can only point to a value which is *contained in* the *current root***.
 
 ##### [Next Topic: Conversion Functions](./Conversion_Functions.md)
 
