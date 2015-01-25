@@ -1,7 +1,6 @@
 ![Kragle.io Logo](http://bit.ly/1EgMjSQ "Kragle.io Logo")
 
 # Kragle.io Documentation
-Documentation for the Kragle.io api and site/service.
 
 ### Table of Contents
 
@@ -51,9 +50,13 @@ Documentation for the Kragle.io api and site/service.
 1. [Links (Relevant external docs, ie: JSON Schema, etc)](./Links.md)
 1. [API-specific Topics](../../tree/master/API-specific_Topics)
   1. [Conversion Specifiers](./API-specific_Topics/Conversion_Specifiers.md)
-    1. Source References
-      1. Referencing arrays in the source
-      1. Embedded Source References for strings
+    1. Basic usage
+    1. Order of replacements (inline vs. regular)
+    1. Referencing functions instead of data
+    1. Nesting replacement markers?
+    1. Referencing array indices within replacement markers
+    1. Converting arrays in source data to arrays in the output structure
+    1. Local vs root references to source data
   1. [Conversion Functions](./API-specific_Topics/Conversion_Functions.md)
     1. TIMESTAMP
     1. URLENCODE

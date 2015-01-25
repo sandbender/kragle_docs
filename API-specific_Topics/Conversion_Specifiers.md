@@ -124,7 +124,7 @@ For a list of available functions, see [Conversion Functions](./Conversion_funct
 
 ... is not allowed.
 
-### Referencing array indices with replacement markers
+### Referencing array indices within replacement markers
 
 In order to be able to reference a numeric array index in the 'source' data, the index must be prefixed with a single `0x01`. Otherwise, that portion of the path in question would be interpreted as a string index.
 
