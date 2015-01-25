@@ -1,3 +1,5 @@
+![Kragle.io Logo](http://bit.ly/1EgMjSQ "Kragle.io Logo")
+
 # Kragle.io Documentation
 Documentation for the Kragle.io api and site/service.
 
