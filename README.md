@@ -61,8 +61,8 @@
     1. URLENCODE
     1. URLENCODE_PLUS
     1. *more to come*
-1. [API Reference](../../tree/master/API_Reference)
-  1. [Login](./API_Reference/Login.md)
+1. [API Reference](./API_Reference.md)
+  1. [Authentication](./API_Reference/Authentication.md)
   1. [Blocks](./API_Reference/Blocks.md)
   1. [Types](./API_Reference/Types.md)
   1. [Stacks](./API_Reference/Stacks.md)
