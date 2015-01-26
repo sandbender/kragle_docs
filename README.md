@@ -45,7 +45,6 @@
   1. [Creating your own Types](./Advanced_Topics/Creating_Types.md)
     1. Making Types flexible - re-using existing Types (schema) and extending/generalizing/etc.
     1. Sharing your custom Types
-    1. Remote types (ie: definitions hosted elsewhere)
   1. [Webhooks and Manually Triggered Stacks](./Advanced_Topics/Webhooks.md)
 1. [Links (Relevant external docs, ie: JSON Schema, etc)](./Links.md)
 1. [API-specific Topics](../../tree/master/API-specific_Topics)
