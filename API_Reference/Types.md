@@ -99,6 +99,40 @@ This endpoint returns a structure which follows the same format as the response 
 **Optional parameters**:
   - None
 
+### GET /schema/byname/<type name>
+### GET /schema/byid/<type id>
+
+_(Calls to this endpoint for public Types do not require authentication. Calls to this endpoint for private Types require authentication. Unauthenticated calls for private Types will receive an HTTP 403 Forbidden response.)_
+
+This endpoint is used to retrieve the definition (ie: JSON Schema) of a single Type.
+
+It is provided as a convenience for developers and/or the community - since Types are essentially just known JSON Schema, being able to reference the schema for a Type directly enables usage of the Kragle Type db as a general-purpose JSON Schema repository.
+
+This endpoint will return a JSON value which is the schema (definition) for the Type.
+
+Sample response body:
+```
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Kragle-data_type__twitter_hashtag_search-schema-v1.0",
+    "type": "object",
+    "properties": {
+        "hashtag": {
+            "type": "string",
+            "title": "Find recent tweets matching this hashtag",
+            "minLength": 1
+        }
+    },
+    "required": ["hashtag"]
+}
+```
+
+Required parameters:
+  - None
+
+Optional parameters:
+  - None
+
 ### POST /types
 
 _(This endpoint **requires** authentication.)_
