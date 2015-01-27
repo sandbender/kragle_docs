@@ -76,8 +76,8 @@ The following is an example of the JSON structure returned by a successful reque
 **Optional parameters**:
   - `page` - integer - The page number from the full result set you wish to retrieve. Default: 1.
 
-### GET /blockstacks/byid/<stack id>
-### GET /blockstacks/byname/<stack name>
+### GET /blockstacks/byid/\<stack id>
+### GET /blockstacks/byname/\<stack name>
 
 _(Calls to this endpoint for public Stacks do not require authentication. Calls to this endpoint for private Stacks require authentication. Unauthenticated calls for private Types will receive an HTTP 403 Forbidden response.)_
 
@@ -171,7 +171,7 @@ Sample JSON request body:
 }
 ```
 
-### PUT /blockstacks/<stack id>
+### PUT /blockstacks/\<stack id>
 
 _(This endpoint **requires** authentication.)_
 

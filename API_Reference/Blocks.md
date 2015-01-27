@@ -55,8 +55,8 @@ Note that `is_approved` is only present if the `filter_user_types` parameter is 
   - `filter_user_types` - boolean - Whether to exclude private Blocks owned by the authenticated user. Default: false.
   - `show_resolved` - boolean - Whether to include a 'resolved' attribute for each Block returned. Default: false.
 
-### GET /blocktypes/byid/<block id>
-### GET /blocktypes/byname/<block name>
+### GET /blocktypes/byid/\<block id>
+### GET /blocktypes/byname/\<block name>
 
 _(Calls to this endpoint for public Blocks do not require authentication. Calls to this endpoint for private Blocks require authentication. Unauthenticated calls for private Blocks will receive an HTTP 403 Forbidden response.)_
 
@@ -116,7 +116,7 @@ Here is an example of the return JSON from this endpoint:
 {"validated": true}
 ```
 
-### PUT /blocktypes/<id>
+### PUT /blocktypes/\<id>
 
 _(This endpoint **requires** authentication.)_
 

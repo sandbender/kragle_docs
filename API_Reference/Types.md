@@ -55,8 +55,8 @@ Note that `is_approved` is only present if the `filter_user_types` parameter is 
   - `filter_user_types` - boolean - Whether to exclude private Types owned by the authenticated user. Default: false.
   - `show_resolved` - boolean - Whether to include a 'resolved' attribute for each Type returned. Default: false.
 
-### GET /types/byid/<type id>
-### GET /types/byname/<type name>
+### GET /types/byid/\<type id>
+### GET /types/byname/\<type name>
 
 _(Calls to this endpoint for public Types do not require authentication. Calls to this endpoint for private Types require authentication. Unauthenticated calls for private Types will receive an HTTP 403 Forbidden response.)_
 
@@ -84,8 +84,8 @@ This endpoint returns a structure following this format:
 **Optional parameters**:
   - None
 
-### GET /schema/byname/<type name>
-### GET /schema/byid/<type id>
+### GET /schema/byname/\<type name>
+### GET /schema/byid/\<type id>
 
 _(Calls to this endpoint for public Types do not require authentication. Calls to this endpoint for private Types require authentication. Unauthenticated calls for private Types will receive an HTTP 403 Forbidden response.)_
 
@@ -150,7 +150,7 @@ Here is an example of the return JSON from this endpoint:
 {"validated": true}
 ```
 
-### PUT /types/<id>
+### PUT /types/\<id>
 
 _(This endpoint **requires** authentication.)_
 

@@ -59,7 +59,7 @@ For a failure, ie: an error of some kind while processing the stack, this struct
 **Optional parameters**:
   - None
 
-### GET /blockstacks/exec/<stack id>
+### GET /blockstacks/exec/\<stack id>
 
 _(This endpoint requires authentication.)_
 
@@ -87,7 +87,7 @@ In both cases, the HTTP response code, as with regular webhooks, will be 200, in
 **Optional parameters**:
   - None
 
-### GET /blockstacks/hook/token_refresh/<stack id>
+### GET /blockstacks/hook/token_refresh/\<stack id>
 
 _(This endpoint requires authentication.)_
 
