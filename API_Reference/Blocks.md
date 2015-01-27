@@ -52,7 +52,7 @@ Note that `is_approved` is only present if the `filter_user_types` parameter is 
 
 **Optional parameters**:
   - `page` - int - The page number of results you wish to retrieve. Default: 1.
-  - `filter_user_types` - boolean - Whether or not to include private Blocks owned by the authenticated user. Default: false.
+  - `filter_user_types` - boolean - Whether to exclude private Blocks owned by the authenticated user. Default: false.
   - `show_resolved` - boolean - Whether to include a 'resolved' attribute for each Block returned. Default: false.
 
 ### GET /blocktypes/byid/<block id>
@@ -122,6 +122,8 @@ On success, the id of the newly created Block is returned, in a JSON object like
 
 ### POST /validate/blocktypes
 
+_(This endpoint **requires** authentication.)_
+
 This endpoint is used to pre-validate a `POST /blocktypes` request before it's actually executed. It takes the same parameters and behaves the same way as the `POST /blocktypes` endpoint, with the only difference being the return value - instead of returning the id of the newly created block, since a block is **not** created when using this validation endpoint, the endpoint returns the validation status (true) if there was no error and the same request to `POST /blocktypes` ** _would have_ ** succeeded.
 
 Here is an example of the return JSON from this endpoint:
@@ -130,6 +132,8 @@ Here is an example of the return JSON from this endpoint:
 ```
 
 ### PUT /blocktypes/<id>
+
+_(This endpoint **requires** authentication.)_
 
 Used to modify an existing Block.
 
