@@ -8,8 +8,8 @@
 
 ## API Reference - Webhooks
 
-### GET /blockstacks/hook/<stack id>
-### POST /blockstacks/hook/<stack id>
+### GET /blockstacks/hook/\<stack id>
+### POST /blockstacks/hook/\<stack id>
 
 _(Authentication requirements for these endpoints are controlled via the 'webhook' property of a Stack. Individual Stacks may or may not require authentication of some form when accessed as Webhooks.)_
 
