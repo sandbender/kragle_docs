@@ -66,11 +66,11 @@
   1. [Blocks](./API_Reference/Blocks.md)
   1. [Types](./API_Reference/Types.md)
   1. [Stacks](./API_Reference/Stacks.md)
+  1. [Webhooks](./API_Reference/Webhooks.md)
   1. [Jobs](./API_Reference/Jobs.md)
   1. [Schedules](./API_Reference/Schedules.md)
   1. [Validation](./API_Reference/Validation.md)
   1. [Conversion](./API_Reference/Conversion.md)
-  1. [Triggering manual stacks (webhooks)](./API_Reference/Webhooks.md)
   1. [Non-OAuth access management (HTTP Basic, etc)](./API_Reference/Access_Mgmt.md)
   1. [Faults and Error Codes](./API_Reference/Faults.md)
 

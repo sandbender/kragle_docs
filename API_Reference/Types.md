@@ -33,11 +33,11 @@ The following is an example of the JSON structure returned by a successful reque
             "id": <id of the Type>,
             "owner": <id of the creator (owner) of this Type>,
             "name": <name of the Type>,
-            "definition": <the Type definition - either a JSON string or a uri>,
+            "definition": <the Type definition - either a JSON object or a uri>,
             "is_remote": <boolean - true if this is a remote-style definition (definition is a uri)>,
             "needs_approval": <boolean - true if this Type has been submitted for approval, ie: pending being made public>,
             "is_approved": <boolean - true if the Type is public (has been approved for public use)>,
-            "resolved": <the definition of the Type (schema) as a JSON string, regardless of is_remote>
+            "resolved": <the definition of the Type (schema) as a JSON object, regardless of is_remote>
         },
         ...
     ]
@@ -56,6 +56,7 @@ Note that `is_approved` is only present if the `filter_user_types` parameter is 
   - `show_resolved` - boolean - Whether to include a 'resolved' attribute for each Type returned. Default: false.
 
 ### GET /types/byid/<type id>
+### GET /types/byname/<type name>
 
 _(Calls to this endpoint for public Types do not require authentication. Calls to this endpoint for private Types require authentication. Unauthenticated calls for private Types will receive an HTTP 403 Forbidden response.)_
 
@@ -72,26 +73,10 @@ This endpoint returns a structure following this format:
     "is_remote": <boolean - true if this is a remote-style definition (definition is a uri)>,
     "is_approved": <boolean - true if the Type is public (has been approved for public use)>,
     "needs_approval": <boolean - true if this Type has been submitted for approval, ie: pending being made public>,
-    "definition": <the Type definition - either a JSON string or a uri>,
-    "resolved": <the definition of the Type (schema) as a JSON string, regardless of is_remote>
+    "definition": <the Type definition - either a JSON object or a uri>,
+    "resolved": <the definition of the Type (schema) as a JSON object, regardless of is_remote>
 }
 ```
-
-**Required  parameters**:
-  - None
-
-**Optional parameters**:
-  - None
-
-### GET /types/byname/<type name>
-
-_(Calls to this endpoint for public Types do not require authentication. Calls to this endpoint for private Types require authentication. Unauthenticated calls for private Types will receive an HTTP 403 Forbidden response.)_
-
-Retrieve information about a single Type, looked up by name.
-
-Unlike retrieving a list of Types, there is no option to filter out 'user' Types (if the Type is visible to you, either publicly or because you own it, it will be returned) and there is no option for 'show_resolved' (the resolved definition is always included).
-
-This endpoint returns a structure which follows the same format as the response from `GET /types/byid/<id>` above.
 
 **Required  parameters**:
   - None
@@ -104,7 +89,7 @@ This endpoint returns a structure which follows the same format as the response 
 
 _(Calls to this endpoint for public Types do not require authentication. Calls to this endpoint for private Types require authentication. Unauthenticated calls for private Types will receive an HTTP 403 Forbidden response.)_
 
-This endpoint is used to retrieve the definition (ie: JSON Schema) of a single Type.
+This endpoint is used to retrieve the definition (ie: JSON Schema) of a single Type, looked up by id or name.
 
 It is provided as a convenience for developers and/or the community - since Types are essentially just known JSON Schema, being able to reference the schema for a Type directly enables usage of the Kragle Type db as a general-purpose JSON Schema repository.
 
@@ -127,10 +112,10 @@ Sample response body:
 }
 ```
 
-Required parameters:
+**Required parameters**:
   - None
 
-Optional parameters:
+**Optional parameters**:
   - None
 
 ### POST /types
@@ -148,7 +133,7 @@ On success, the id of the newly created Type is returned, in a JSON object like 
 
 **Required parameters**:
   - `name` - string - The name of this Type.
-  - `definition` - string - Either a url pointing to a JSON string, or a JSON string. In either case, the definition itself must be a valid Type structure. If this is a uri, you must also pass 'is_remote' and it must be true.
+  - `definition` - string or object - Either a url pointing to a JSON string, or a JSON object. In either case, the definition itself must be a valid Type structure. If this is a uri, you must also pass 'is_remote' and it must be true.
 
 **Optional parameters**:
   - `is_remote` - boolean - Indicates whether the Type has a uri as it's definition, ie: the actual definition is hosted elsewhere. Required if passing a uri as 'definition', and in that case it must be true. Default: false.
@@ -183,7 +168,7 @@ The return value of a PUT operation for a Type is a json object representing the
     "is_approved": true,
     "needs_approval": false,
     "definition": "http://mydomain.com/mytype.json",
-    "resolved": <JSON string containing the Type definition (schema)>
+    "resolved": <JSON object containing the Type definition (schema)>
 }
 ```
 
@@ -192,7 +177,7 @@ The return value of a PUT operation for a Type is a json object representing the
 
 **Optional parameters**:
   - `name` - string - The name of this Type.
-  - `definition` - string - Either a url pointing to a JSON string, or a JSON string. In either case, the definition itself must be a valid Type structure. If this is a uri, you must also pass 'is_remote' and it must be true.
+  - `definition` - string or object - Either a url pointing to a JSON string, or a JSON object. In either case, the definition itself must be a valid Type structure. If this is a uri, you must also pass 'is_remote' and it must be true.
   - `is_remote` - boolean - Indicates whether the Type has a uri as it's definition, ie: the actual definition is hosted elsewhere. Required if passing a uri as 'definition', and in that case it must be true. Default: false.
   - `needs_approval` - boolean - Indicates whether the Type should be flagged for approval to be made public. Default: false.
 
