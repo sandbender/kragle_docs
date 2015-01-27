@@ -10,11 +10,15 @@
 
 ### GET /blocktypes
 
+_(No authentication required for this endpoint)_
+
 Retrieve a list of available Blocks for use when building stacks.
 
 Pagination is supported via the `page` parameter.
 
 You can also filter out non-public Blocks belonging to you and retrieve only public Blocks (including public blocks created by you) via the `filter_user_types` parameter (if true, your private Blocks will not be returned in the results).
+
+_(Note that if the request is not authenticated, only public Blocks will be returned regardless of the value of the `filter_user_types` parameter.)_
 
 Lastly, you can choose to not include the 'resolved' value of a Block - this means that for Blocks where `is_remote` is true, the returned Block data will include the uri of the Block but not the actual JSON value. This is via the `show_resolved` parameter. Note that if you choose to show resolved definitions, Blocks which are **not** remote will end up including their definitions twice in the result, once for 'definition' and once for 'resolved'.
 
@@ -53,6 +57,8 @@ Note that `is_approved` is only present if the `filter_user_types` parameter is 
 
 ### GET /blocktypes/byid/<block id>
 
+_(Calls to this endpoint for public Blocks do not require authentication. Calls to this endpoint for private Blocks require authentication. Unauthenticated calls for private Blocks will receive an HTTP 403 Forbidden response.)_
+
 Retrieve information about a single Block, looked up by id.
 
 Unlike retrieving a list of Blocks, there is no option to filter out 'user' Blocks (if the Block is visible to you, either publicly or because you own it, it will be returned) and there is no option for 'show_resolved' (the resolved definition is always included).
@@ -79,6 +85,8 @@ This endpoint returns a structure following this format:
 
 ### GET /blocktypes/byname/<block name>
 
+_(Calls to this endpoint for public Blocks do not require authentication. Calls to this endpoint for private Blocks require authentication. Unauthenticated calls for private Blocks will receive an HTTP 403 Forbidden response.)_
+
 Retrieve information about a single Block, looked up by name.
 
 Unlike retrieving a list of Blocks, there is no option to filter out 'user' Blocks (if the Block is visible to you, either publicly or because you own it, it will be returned) and there is no option for 'show_resolved' (the resolved definition is always included).
@@ -92,6 +100,8 @@ This endpoint returns a structure which follows the same format as the response 
   - None
 
 ### POST /blocktypes
+
+_(This endpoint **requires** authentication.)_
 
 This endpoint is used to create a new Block.
 

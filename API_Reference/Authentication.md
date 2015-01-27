@@ -10,6 +10,8 @@
 
 ### POST /authenticate
 
+_(This endpoing does **not** require authentication)_
+
 Authenticate against the Kragle api. A successful response will be: `{'code': 0, 'user_id': <your user id>}` and will have a 200 HTTP response code as usual.
 
 **Required parameters**:
