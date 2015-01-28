@@ -147,6 +147,8 @@ The return value of a PUT operation for a Block is a json object representing th
   - `is_remote` - boolean - Indicates whether the Block has a uri as it's definition, ie: the actual definition is hosted elsewhere. Required if passing a uri as 'definition', and in that case it must be true. Default: false.
   - `needs_approval` - boolean - Indicates whether the Block should be flagged for approval to be made public. Default: false.
 
+**NB**: Any optional parameters **not** passed in the request will be left unchanged.
+
 ##### [Next Topic: Types](./Types.md)
 
 ##### [Previous Topic: Authentication](./Authentication.md)

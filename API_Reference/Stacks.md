@@ -214,6 +214,8 @@ The return value of a PUT operation for a Stack is a json object representing th
   - `webhook` - string - One of (null, "public", "token", or "user"). Optionally set the new Stack for webhook-style access. Default: null.
   - `webhook_method` - string - GET or POST. Only makes sense w/ `webhook`, if `webhook` is non-null.
 
+**NB**: Any optional parameters **not** passed in the request will be left unchanged.
+
 ##### [Next Topic: Jobs](./Jobs.md)
 
 ##### [Previous Topic: Types](./Types.md)
