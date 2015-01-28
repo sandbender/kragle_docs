@@ -91,12 +91,12 @@ You are missing either the 'conversion' or 'data' elements of the JSON payload f
 ### Code: 17
 ##### Your conversion produced an error.
 
-The specified conversion failed - check your data and/or conversion structure.
+The attempted conversion resulted in an internal error - check your data and/or conversion specifier.
 
 ### Code: 18
 ##### Your validation produced an error.
 
-The provided data did not validate against the specified JSON Schema - check the data and/or schema.
+The provided data resulted in an internal error while attempting to validate against the provided schema - check your data and/or schema.
 
 ### Code: 19
 ##### The uri provided for a JSON Schema was invalid or a json object could not be loaded from the response.
