@@ -19,7 +19,7 @@ Required Params:
 
 Optional Params:
 - headers - object - An object representing HTTP headers to send with the request, where keys are header names and values are the header values. Values must be strings. Default: `{}`.
-- response_type - string (enum) - One of 'string' or 'json'. If 'string', the response body will be returned as a raw string. If 'json', the body will be parsed as json and the resulting object returned. Default: 'string'.
+- response_type - string (enum) - One of 'string', 'json' or 'xml'. If 'string', the response body will be returned as a raw string. If 'json', the body will be parsed as json and the resulting object returned. If 'xml', the body will be parsed as xml, **and converted to a representative json structure**, and returned. Default: 'string'.
 - body - string - **Ony valid for uri_post**. The body to POST to the url with the request. Default: no body is sent (null string).
 - auth_required - boolean - Indicates that the request will require some form of authentication. Default: 'false'.
 - auth_type - string (enum) - One of 'strategy' or 'basic'. **No default.**
