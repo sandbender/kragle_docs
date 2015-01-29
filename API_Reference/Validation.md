@@ -21,7 +21,7 @@ The `schema` portion of the request can either be a JSON object which **is** the
 The request body must be a JSON object following this format:
 ```
 {
-    "schema": <object or JSON string, either of which must be a valid JSON Schema>,
+    "schema": <object or JSON string - a JSON object or url for a JSON object respectively>,
     "data": <object to validate against the schema>
 }
 ```
