@@ -87,6 +87,8 @@ This endpoint returns a structure following this format:
 ### GET /schema/byname/\<type name>
 ### GET /schema/byid/\<type id>
 
+**NB: The schema urls do NOT use an api version identifier in the full uri, ie: a complete query string would be /api/schema/byid/1 and NOT /api/v1/schema/byid/1!!! Schema endpoints are intentionally api version-agnostic since they are intended to be used as permalinks and should NOT change in future api versions!!!**
+
 _(Calls to this endpoint for public Types do not require authentication. Calls to this endpoint for private Types require authentication. Unauthenticated calls for private Types will receive an HTTP 403 Forbidden response.)_
 
 This endpoint is used to retrieve the definition (ie: JSON Schema) of a single Type, looked up by id or name.
