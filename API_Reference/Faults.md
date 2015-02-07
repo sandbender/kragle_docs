@@ -104,6 +104,12 @@ The provided data resulted in an internal error while attempting to validate aga
 ### Code: 20
 ##### The type you are trying to modify is already approved (public) - you can not modify "is_remote" or "definition"!
 
+### Code: 21
+##### The schema uri you passed was invalid or a json object could not be loaded from the result.
+
+### Code: 22
+##### You passed a non-existent Block type in your list of Blocks for a Stack.
+
 ##### [Previous Topic: Non-OAuth access management](./Access_Mgmt.md)
 
 ### [Back to Table of Contents](../README.md)
