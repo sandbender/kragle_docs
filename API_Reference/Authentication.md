@@ -8,6 +8,21 @@
 
 ## API Reference - Authentication endpoints
 
+
+#### Notes regarding authentication for Block actions
+
+If you are creating a Stack through the API which uses a block that needs OAuth credentials for a request, you'll need to grant Kragle authorization to access your account before the Stack will work. See [The Basics - Blocks](../The_Basics/Blocks.md)
+
+This is accomplished with the oauth url for the domain in question. For example, if you are using a Block which makes a request to the url http://api.del.icio.us/v1/posts/get , you will need to login to Kragle and visit https://kragle.io/oauth/redirect/api.del.icio.us, which will perform the appropriate redirect and prompt you on the target site to grant access to Kragle. Once you grant access and are redirected back to Kragle, the appropriate credentials will be available for use by your Kragle Stacks.
+
+The general format of the authorization url for a Block which uses the 'strategy' auth type (ie: some form of OAuth) is:
+
+```
+https://kragle.io/oauth/redirect/<domain>
+```
+
+... where `domain` is the hostname (domain name) of the url for which your Kragle Stacks require access.
+
 ### POST /authenticate
 
 _(This endpoing does **not** require authentication)_

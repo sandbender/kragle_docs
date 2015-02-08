@@ -28,6 +28,10 @@ This authorization flow (Site A -> redirect to Site B -> grant access to Site A 
 already, and is essentially the same mechanism used by mobile apps (example: a Twitter client for Android) when you grant them access
 to work with your account.
 
+#### Authentication for API usage
+
+When using the API, there will be no interactive redirect/prompt for authorization, so you will need to visit the relevant Kragle oauth url in a browser, while logged in, which will redirect you to the appropriate oauth endpoint at the site/service in question. Once granted, your API-created Stacks that make auth-requiring HTTP requests will have the necessary credentials they require.
+
 ##### [Next Topic: The Basics - Jobs](./Jobs.md)
 
 ##### [Previous Topic: The Basics - Stacks](./Stacks.md)
