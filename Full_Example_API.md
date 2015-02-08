@@ -2,6 +2,8 @@
 
 ### [Table of Contents](./README.md)
 
+##### [Previous Topic: Faults and Error Codes](./API_Reference/Faults.md)
+
 ## A Full Example/Walkthrough, via the API
 
 
