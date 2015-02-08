@@ -4,6 +4,8 @@
 
 ##### [Previous Topic: Non-OAuth access management](./Access_Mgmt.md)
 
+##### [Next Topic: A Full Example/Walkthrough via the API](../Full_Example_API.md)
+
 ## Faults and Error Codes
 
 All request-based errors to the Kragle api will generate an HTTP 500 (Internal Server Error) with a JSON body describing the error.
@@ -109,6 +111,8 @@ The provided data resulted in an internal error while attempting to validate aga
 
 ### Code: 22
 ##### You passed a non-existent Block type in your list of Blocks for a Stack.
+
+##### [Next Topic: A Full Example/Walkthrough via the API](../Full_Example_API.md)
 
 ##### [Previous Topic: Non-OAuth access management](./Access_Mgmt.md)
 
