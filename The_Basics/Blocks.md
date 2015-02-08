@@ -32,6 +32,16 @@ to work with your account.
 
 When using the API, there will be no interactive redirect/prompt for authorization, so you will need to visit the relevant Kragle oauth url in a browser, while logged in, which will redirect you to the appropriate oauth endpoint at the site/service in question. Once granted, your API-created Stacks that make auth-requiring HTTP requests will have the necessary credentials they require.
 
+The general format of the authorization url for a Block which uses the 'strategy' auth type (ie: some form of OAuth) is:
+
+```
+https://kragle.io/oauth/redirect/<domain>
+```
+
+... where `domain` is the hostname (domain name) of the url for which your Kragle Stacks require access.
+
+For example, if we are creating a Stack which talks to the Delicious api via the url https://api.del.icio.us/v1/posts/get , then we would visit https://kragle.io/oauth/redirect/api.del.icio.us in order to grant the appropriate permission to Kragle, so that it may talk to Delicious on our behalf.
+
 ##### [Next Topic: The Basics - Jobs](./Jobs.md)
 
 ##### [Previous Topic: The Basics - Stacks](./Stacks.md)
