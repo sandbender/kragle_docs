@@ -14,7 +14,7 @@ We want to have Kragle post a message to the Hipchat room, which contains some o
 
 To start off with, we'll need to setup some basics and authenticate to get a session auth cookie from Kragle:
 
-```
+```python
 >>> import requests
 >>> import json
 >>> import pprint
@@ -36,7 +36,7 @@ We setup a `post_headers` dict to use when making post requests (Content-Type), 
 
 Next, we make a call to the `/blocktypes` endpoint to see what's available:
 
-```
+```python
 >>> pprint.pprint(requests.get('https://kragle.io/api/v1/blocktypes?show_resolved=1', cookies=cookies).json())
 {u'blocktypes': [{u'definition': u'https://raw.githubusercontent.com/sandbender/json_schema/master/block__delicious_tag_results_last.json',
                   u'id': 2,
@@ -77,7 +77,7 @@ Ah, exactly what we need, a Block which will return the last Delicious post (for
 
 Unfortunately, we see no HipChat Blocks ready-made. Luckily, this is not an issue - we can simply create a "HipChat - Send Message to Room" block, like so:
 
-```
+```python
 >>> hipchat_block_def = {
 ...     u'actions': [
 ...         {u'action': u'uri_post',
@@ -96,13 +96,13 @@ We've specified that our block should have one action, which makes the POST requ
 
 Now we'll add this to a payload object for a request to create a new Block:
 
-```
+```python
 >>> new_block_payload = {'name': 'HipChat - Send Message to Room', 'definition': hipchat_block_def}
 ```
 
 Next, before we create this Block let's validate it first to make sure there are no glaring errors. Conveniently, the validate endpoint takes exactly the same parameters as the 'live' create-Block endpoint, so we can use the same payload to first validate...
 
-```
+```python
 >>> new_block_validation = requests.post('https://kragle.io/api/v1/validate/blocktypes', headers=post_headers, cookies=cookies, data=json.dumps(new_block_payload))
 >>> new_block_validation.json()
 {u'validated': True}
@@ -110,7 +110,7 @@ Next, before we create this Block let's validate it first to make sure there are
 
 Awesome, looks good! Let's create it for real:
 
-```
+```python
 >>> new_block_result = requests.post('https://kragle.io/api/v1/blocktypes', headers=post_headers, cookies=cookies, data=json.dumps(new_block_payload))
 >>> new_block_result.json()
 {u'id': 3}
@@ -120,7 +120,7 @@ Our new "Send message to HipChat room" Block has now been created, with a Block 
 
 Now that we have our block, we still need to create something else before we can use this in a Stack: for the input Type to the Block, we've specified `hipchat_message_to_room`, which doesn't exist yet since we just made that up. In order for this Block to work, we'll need to create that Type:
 
-```
+```python
 >>> hipchat_message_to_room_type_definition = '''
 ... {
 ...     "$schema": "http://json-schema.org/draft-04/schema#",
@@ -143,7 +143,7 @@ Our new type is a JSON Schema, like all Types, and says that an object which val
 
 Once again, let's create the create-Type payload and validate it first to make sure it's sane:
 
-```
+```python
 >>> new_type_payload = {'name': 'Hipchat - New Message for Room', 'definition': hipchat_message_to_room_type_def_obj}
 >>> 
 >>> new_type_validation = requests.post('https://kragle.io/api/v1/validate/types', headers=post_headers, cookies=cookies, data=json.dumps(new_type_payload))
@@ -153,7 +153,7 @@ Once again, let's create the create-Type payload and validate it first to make s
 
 Great! Now let's create the new type:
 
-```
+```python
 >>> new_type_result = requests.post('https://kragle.io/api/v1/types', headers=post_headers, cookies=cookies, data=json.dumps(new_type_payload))
 >>> new_type_result.json()
 {u'id': 13}
