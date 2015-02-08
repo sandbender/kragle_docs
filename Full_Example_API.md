@@ -42,7 +42,7 @@ Next, we make a call to the `/blocktypes` endpoint to see what's available:
                   u'id': 2,
                   u'is_approved': False,
                   u'is_remote': True,
-                  u'name': u'Delicious Posts tagged...',
+                  u'name': u'Last Post on Delicious tagged...',
                   u'needs_approval': False,
                   u'owner': 3,
                   u'resolved': {u'actions': [{u'action': u'uri_get',
@@ -64,8 +64,8 @@ Next, we make a call to the `/blocktypes` endpoint to see what's available:
                                               u'action_params': {}}],
                                 u'initial_state': {u'input': {},
                                                    u'output': {u'hashes': []}},
-                                u'io': {u'input': u'delicious_tag_search',
-                                        u'output': u'delicious_post'},
+                                u'io': {u'input': u'Delicious Tag Search',
+                                        u'output': u'Delicious Post'},
                                 u'state': {u'input': {},
                                            u'output': {u'hashes': [u'\x01/hash']}}}}],
  u'count': 1,
@@ -74,6 +74,8 @@ Next, we make a call to the `/blocktypes` endpoint to see what's available:
 ```
 
 Ah, exactly what we need, a Block which will return the last Delicious post (for my account) with a given Tag!
+
+#### Create the needed HipChat Block type so we can send messages to HipChat rooms via Kragle...
 
 Unfortunately, we see no HipChat Blocks ready-made. Luckily, this is not an issue - we can simply create a "HipChat - Send Message to Room" block, like so:
 
@@ -87,7 +89,7 @@ Unfortunately, we see no HipChat Blocks ready-made. Luckily, this is not an issu
 ...              u'response_type': u'json',
 ...              u'uri': u'https://api.hipchat.com/v1/rooms/message?auth_token=\x01\x01/input/auth_token\x02\x02&format=json'}}],
 ...     u'initial_state': {u'input': {}, u'output': {}},
-...     u'io': {u'input': u'hipchat_message_to_room', u'output': None},
+...     u'io': {u'input': u'HipChat - New Message for Room', u'output': None},
 ...     u'state': {u'input': {}, u'output': {}}}
 >>>
 ```
@@ -118,7 +120,9 @@ Awesome, looks good! Let's create it for real:
 
 Our new "Send message to HipChat room" Block has now been created, with a Block id of 3.
 
-Now that we have our block, we still need to create something else before we can use this in a Stack: for the input Type to the Block, we've specified `hipchat_message_to_room`, which doesn't exist yet since we just made that up. In order for this Block to work, we'll need to create that Type:
+#### Create a new Type which defines the input format for the Block we just created...
+
+Now that we have our block, we still need to create something else before we can use this in a Stack: for the input Type to the Block, we've specified `HipChat - New Message for Room`, which doesn't exist yet since we just made that up. In order for this Block to work, we'll need to create that Type:
 
 ```python
 >>> hipchat_message_to_room_type_definition = '''
@@ -144,7 +148,7 @@ Our new type is a JSON Schema, like all Types, and says that an object which val
 Once again, let's create the create-Type payload and validate it first to make sure it's sane:
 
 ```python
->>> new_type_payload = {'name': 'Hipchat - New Message for Room', 'definition': hipchat_message_to_room_type_def_obj}
+>>> new_type_payload = {'name': 'HipChat - New Message for Room', 'definition': hipchat_message_to_room_type_def_obj}
 >>> 
 >>> new_type_validation = requests.post('https://kragle.io/api/v1/validate/types', headers=post_headers, cookies=cookies, data=json.dumps(new_type_payload))
 >>> new_type_validation.json()
@@ -160,6 +164,52 @@ Great! Now let's create the new type:
 ```
 
 And now our new Block and it's associated Type are ready for us to use!
+
+#### Put it all together - make a Stack!
+
+Now that we have all the pieces we need for our Stack, let's set it up. Here's the payload we'll use to create the stack:
+
+```python
+>>> new_stack_payload = {
+...     'name': 'Send Delicious links to my coworkers on HipChat',
+...     'blocks': [
+...         ['Last Post on Delicious tagged...', {'tag': 'coworkers'}],
+...         ['HipChat - Send Message to Room', {'room_id': '1234567', 'auth_token': 'ABCDEF0987654321', 'content': 'New Link! \x01\x01/input/url\x02\x02'}]
+...     ]
+... }
+```
+
+Our stack is simply a list of Blocks which are executed in order, along with Conversion Specifiers used to transform their input into the appropriate Type that the Block expects. See the [API-specific Topics - Conversion Specifiers](./API-specific_Topics/Conversion_Specifiers.md) section of these docs for more information on Conversions.
+
+You can also use the [Conversion](./API_Reference/Conversion.md) api endpoint to test your conversion structures beforehand.
+
+The Delicious Block expects a "Delicious Tag Search" as it's input, which is an object containing a single 'tag' property, so we specify this directly (we're searching for posts with the "coworkers" tag).
+
+The "HipChat - Send Message to Room" Block that we previously created expects a "HipChat - New Message for Room" as input and so we use a Conversion Specifier that will result in an appropriate structure.
+
+**Note that this is where we specify the `room_id` and `auth_token` for our request, and _not_ in the Block definition. Blocks are generic site-actions and you should not include any instance-specific information in them as public Blocks will be available for everyone, but somewhat useless if they're built using hard-coded defaults for things which need to be parameterized. Stacks, on the other hand, are instance-specific - anything in the Conversion Specifier for a Block within a Stack is _specific to that Stack_.** If our HipChat block is made public, others will be able to use it and specify their own "arguments" for the Blocks involved, in the form of their own Stack-specific Conversion Specifiers for their own Stacks.
+
+Now let's create our stack:
+
+```python
+>>> new_stack_response = requests.post('https://kragle.io/api/v1/blockstacks', headers=post_headers, cookies=cookies, data=json.dumps(new_stack_payload))
+>>> new_stack_response.json()
+{u'id': 1}
+```
+
+Excellent - our first Stack!
+
+#### Testing our Stack
+
+Now that the Stack is created, it hasn't yet been activated - since this is a 'regular' (vs. webhook) style stack, it will ultimately be run periodically by the Kragle system once enabled via a Job; a Job takes a Stack id and a Schedule id and creates a recurring job which executes the Stack in question every so often, according to the configuration of the Schedule.
+
+For now though, we just want to manually run the Stack once to see if it works (after checking that we've saved a post on Delicious today tagged with "coworkers").
+
+We can do this via the [Webhooks](./API_Reference/Webhooks.md) endpoints like so:
+
+```python
+
+```
 
 ##### [Previous Topic: Faults and Error Codes](./API_Reference/Faults.md)
 
