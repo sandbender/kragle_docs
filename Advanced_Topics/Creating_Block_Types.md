@@ -121,7 +121,7 @@ You will often want or need to use data present in the input to a Block in vario
 'convert' process/action mentioned above. When specifying the parameters for an Action, you can use special placeholders which reference
 input data, which will be automatically replaced at runtime through the 'convert' mechanism.
 
-Full details on how the 'convert' mechanism works are provided later under the API-specific Topic [Conversion Specifiers](../API-specific_Topics/Conversion_Specifiers.md). For now, we'll describe the input structure that every Action can reference via these placeholders:
+**Full details on how the 'convert' mechanism works are provided later under the API-specific Topic [Conversion Specifiers](../API-specific_Topics/Conversion_Specifiers.md).** For now, we'll describe the input structure that every Action can reference via these placeholders:
 
 ```json
 {
@@ -166,7 +166,7 @@ State is saved on a per-Block-instance basis, so you could theoretically have tw
 
 The 'state' structure (a top level element of your Block's 'definition' structure) is used to specify what data from the input or output of the block you wish to save for use during the next execution of the Block. ('state' structure is described below)
 
-Just like action parameters, the State structure you specify uses the 'convert' mechanism to replace placeholders in the structure with corresponding data from the input or output of a block. Full details on how the 'convert' mechanism works are provided later under the API-specific Topic [Conversion Specifiers](../API-specific_Topics/Conversion_Specifiers.md).
+Just like action parameters, the State structure you specify uses the 'convert' mechanism to replace placeholders in the structure with corresponding data from the input or output of a block. **Full details on how the 'convert' mechanism works are provided later under the API-specific Topic [Conversion Specifiers](../API-specific_Topics/Conversion_Specifiers.md).**
 
 Any placeholders in the 'input' section of your state structure will be replaced with the corresponding elements from whatever structure was the 'raw' input to the block. Likewise, any placeholders in the 'output' section of your state structure will be replaced with the corresponding elements from whatever data structure was output by this block.
 
