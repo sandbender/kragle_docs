@@ -83,6 +83,16 @@ Arguments:
 
 Return Value: The difference of all arguments, ie: arg1 - arg2 - ... - argn.
 
+#### HASH_SHA256, HASH_SHA512, HASH_MD5
+
+Calculate a hash for an input string.
+
+Arguments:
+
+1. The string to hash. **If no string is provided, the empty string is used.**
+
+Return Value: The hash (either md5, sha256 or sha512 depending on which function is used) of the string, output as a hex digest string.
+
 ##### [Next Topic: API Reference](../../../tree/master/API_Reference)
 
 ##### [Previous Topic: Conversion Specifiers](./Conversion_Specifiers.md)
