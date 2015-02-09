@@ -184,37 +184,96 @@ And now our new Block and it's associated Type are ready for us to use!
 
 #### <a name='stack_creation'></a>Creating a Stack
 
-Now that we have all the pieces we need for our Stack, let's set it up. Here's the payload we'll use to create the stack:
+Once we know what we want our Stack to do, and we've identified the available Blocks we can stack together to make that happen, we can use the "POST /blockstacks" endpoint to create our Stack.
+
+In the case of our Delicious -> HipChat example, we will use the "Last Post on Delicious tagged..." Block, and will stack it on top of the "HipChat - Send Message to Room" Block.
+
+The main thing we need to know, aside from having chosen the Blocks we wish to use in our Stack, is the Type that each of our Blocks expects as input so that when stacking them together we can provide an appropriate [Conversion Specifier](./API-specific_Topics/Conversion_Specifiers.md) to provide the required input.
+
+The definition (schema) for a 'Delicious Tag Search', which is the input type to our Delicious block, looks like this (as JSON):
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Kragle-data_type__deicious_tag_search-schema-v1.0",
+    "type": "object",
+    "properties": {
+        "tag": {
+            "type": "string",
+            "title": "Find recent Delicious posts tagged with this",
+            "minLength": 1
+        }
+    },
+    "required": ["tag"]
+}
+```
+
+So we'll need to provide that block with a conversion specifier that results in an object with a single property, 'tag', whose value is the tag we want to search for in our recent Delicious posts.
+
+The Delicious block outputs a "Delicious Post" structure, whose Type definition (schema) looks like this:
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Kragle-data_type__delicious_post-schema-v1.0",
+    "type": "object",
+    "properties": {
+        "description": {"type": "string", "minLength": 1},
+        "url": {"type": "string"},
+        "tags": {"type": "array", "items": {"type": "string"}},
+        "hash": {"type": "string", "minLength": 1}
+    },
+    "required": ["description", "url", "tags", "hash"]
+}
+```
+
+This is the format of the structure which we'll need to convert into the **input** Type that our HipChat Block expects. Our HipChat block expects a "HipChat - New Message for Room" structure as input, whose schema looks like this:
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Kragle-data_type__hipchat_message_to_room-schema-v1.0",
+    "type": "object",
+    "properties": {
+        "room_id": {"type": "string", "minLength": 1},
+        "content": {"type": "string"},
+        "auth_token": {"type": "string", "minLength": 1}
+    },
+    "required": ["room_id", "content", "auth_token"]
+}
+```
+
+To put that all in context, here's how we will use our knowledge of the format of each of those Type structures to provide appropriate conversion specifiers when buiding our Stack. Here is the payload for the create-Stack request we're about to make:
 
 ```python
->>> new_stack_payload = {
-...     'name': 'Send Delicious links to my coworkers on HipChat',
-...     'blocks': [
-...         ['Last Post on Delicious tagged...', {'tag': 'coworkers'}],
-...         ['HipChat - Send Message to Room', {'room_id': '1234567', 'auth_token': 'ABCDEF0987654321', 'content': 'New Link! \x01\x01/url\x02\x02'}]
-...     ]
-... }
+new_stack_payload = {
+    'name': 'Send Delicious links to my coworkers on HipChat',
+    'blocks': [
+        ['Last Post on Delicious tagged...', {'tag': 'coworkers'}],
+        ['HipChat - Send Message to Room', {'room_id': '1234567', 'auth_token': 'ABCDEF0987654321', 'content': 'New Link! \x01\x01/url\x02\x02'}]
+    ]
+}
 ```
 
 Our stack is simply a list of Blocks which are executed in order, along with Conversion Specifiers used to transform their input into the appropriate Type that the Block expects. See the [API-specific Topics - Conversion Specifiers](./API-specific_Topics/Conversion_Specifiers.md) section of these docs for more information on Conversions.
 
-You can also use the [Conversion](./API_Reference/Conversion.md) api endpoint to test your conversion structures beforehand.
+For our 'Last Post on Delicious tagged...' Block we specify a structure containing no replacement markers for conversion - this will be passed as-is, and is a valid 'Delicious Tag Search' which is the type that this Block expects.
 
-The Delicious Block expects a "Delicious Tag Search" as it's input, which is an object containing a single 'tag' property, so we specify this directly (we're searching for posts with the "coworkers" tag).
+For our 'HipChat - Send Message to Room' Block, we pass a structure which contains the `room_id` and `auth_token` we need, as well as the `content` of the message, which contains a replacement marker. This replacement marker's contents, `/url`, refer to the "path" of a piece of data in the input it receives. Since the Delicious Block is stacked on top of it, the **output** Type of that Delicious Block is what will be used as input for this conversion. The output of our Delicious Block is a "Delicious Post" structure, which among other things contains a `url` property. The value of `url` from that "Delicious Post" output by the Delicious Block will be used as the value to replace in our conversion structure for the HipChat Block, and in this way we use the data output by the first block as input for the second.
 
-The "HipChat - Send Message to Room" Block that we previously created expects a "HipChat - New Message for Room" as input and so we use a Conversion Specifier that will result in an appropriate structure.
+You can always use the [Conversion](./API_Reference/Conversion.md) api endpoint to test your conversion structures beforehand.
 
-**Note that this is where we specify the `room_id` and `auth_token` for our request, and _not_ in the Block definition. Blocks are generic site-actions and you should not include any instance-specific information in them as public Blocks will be available for everyone, but somewhat useless if they're built using hard-coded defaults for things which need to be parameterized. Stacks, on the other hand, are instance-specific - anything in the Conversion Specifier for a Block within a Stack is _specific to that Stack_.** If our HipChat block is made public, others will be able to use it and specify their own "arguments" for the Blocks involved, in the form of their own Stack-specific Conversion Specifiers for their own Stacks.
+**It is important to note here that you should specify "runtime configuration" data for a Block via the Conversion Specifiers for that Block within a Stack.** These Conversion Specifiers in a Stack's list of Blocks are specific to the instance of the Block within _that particular stack_. Conversely, anything "hard-coded" into the definition of a Block will be present in **every** instance of that Block.
 
-Now let's create our stack:
+Now that we have everything setup, let's create our Stack:
 
 ```python
->>> new_stack_response = requests.post('https://kragle.io/api/v1/blockstacks', headers=post_headers, cookies=cookies, data=json.dumps(new_stack_payload))
+>>> new_stack_response = requests.post('https://kragle.io/api/v1/blockstacks', headers=body_headers, cookies=cookies, data=json.dumps(new_stack_payload))
 >>> new_stack_response.json()
-{u'id': 1}
+{u'id': 2}
 ```
 
-Excellent - our first Stack!
+Excellent - we just created our first Stack!
 
 #### Testing our Stack
 
@@ -222,11 +281,18 @@ Now that the Stack is created, it hasn't yet been activated - since this is a 'r
 
 For now though, we just want to manually run the Stack once to see if it works (after checking that we've saved a post on Delicious today tagged with "coworkers").
 
-We can do this via the [Webhooks](./API_Reference/Webhooks.md) endpoints like so:
+We can do this via the [Webhooks](./API_Reference/Webhooks.md) "exec" endpoint like so:
 
 ```python
-
+>>> requests.get('https://kragle.io/api/v1/blockstacks/exec/2', cookies=cookies).json()
+{u'success': [5, 6]}
 ```
+
+The `success` element of the response indicates that our Stack was executed without error, and the value is the sequential list of Block instances which were executed as part of this Stack.
+
+We now go to our HipChat window/app, and see that a new message with the appropriate content was indeed posted to our room.
+
+Success!
 
 ##### [Previous Topic: Faults and Error Codes](./API_Reference/Faults.md)
 
