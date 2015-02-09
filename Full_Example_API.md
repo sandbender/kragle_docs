@@ -87,6 +87,21 @@ In order to create a custom Block, the main thing we need to do is create it's "
 
 _For those who are interested in the schema for a Block, it is currently available here: [Block Type Schema](https://raw.githubusercontent.com/sandbender/json_schema/master/block_type.json)._
 
+Our Block only has a single Action - it makes a POST request to the appropriate HipChat api url which will result in a message being sent to the appropriate room.
+
+The parameters for our Action contain the uri to which the request will be made, the body of the request, as well as a custom HTTP header for Content-Type since we will be sending form-encoded data, and finally an indicator that we expect JSON data to be returned in the response.
+
+Note that both the `body` and `uri` parameters contain 'replacement markers' - special strings delimited with ASCII `0x01` (and `0x02`) characters. These replacement marker will be substituted with the corresponding data from the input structure which is fed to every Action.
+
+_For details on the format of the structure used as the input for this conversion, see the [Advanced Topics - Creating Block Types (The Action input structure)](./Advanced_Topics/Creating_Block_Types.md#action_input_structure) section in the documentation._
+
+_For details on how the conversion mechanism works, refer to the [API-specific Topics - Conversion Specifiers](./API-specific_Topics/Conversion_Specifiers.md) section of this documentation._
+
+We must also specify "state" parameters in our Block definition; in this case, since our Block requires no state data to be persisted in between executions, both `state` and `initial_state` in the definition are left at the "default" values. (These are required elements of a Block definition, so we must include them explicitly, however by leaving both the `input` and `output` properties as empty objects (`{}`), for both `state` and `initial_state`, we signify that our Block requires no state data to be saved.)
+
+_For further details on how to use State within your custom Block definitions, see the [Advanced Topics - Creating Block types (State)](./Advanced_Topics/Creating_Block_Types.md#state) section of this documentation._
+
+Last but not least, we must specify what Types our new Block expects as input and output. 
 
 
 We've specified that our block should have one action, which makes the POST request to the appropriate HipChat api endpoint. We've also specified a body for the request which is a mix of static content and data which will come from the input to this block. You'll also notice that there is an 'auth_token' parameter to the HipChat url (for their auth), whose value also comes from what will be the input to this block, and we specified an explicit Content-Type header since we're using a 'form style' url-encoded values.

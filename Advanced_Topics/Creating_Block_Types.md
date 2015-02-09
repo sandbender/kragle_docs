@@ -115,7 +115,7 @@ The most common Actions you'll use all the time when building custom Block types
 
 The Actions which make up a Block are specified as an ordered list (array), and each different action type available will have it's own set of required and optional parameters it needs to be configured with when using it to build a Block. The list of Actions for a block is specified as the 'actions' top-level element of your block definition structure. Each element in the 'actions' list must be an object having two elements: 'action' (the name of the action to use) and 'action_params' (an object whose elements are the required/optional parameters for the action in question).
 
-#### The Action input structure
+#### <a name='action_input_structure'></a>The Action input structure
 
 You will often want or need to use data present in the input to a Block in various spots in your actions. This is supported via the
 'convert' process/action mentioned above. When specifying the parameters for an Action, you can use special placeholders which reference
