@@ -26,6 +26,15 @@ The request body must be a JSON object following this format:
 
 The response body will be a JSON object - the result of the conversion.
 
+**NB: You can also pass _uri -appended versions of both the `schema` and `data` parameters if you with to pass a url which points to an appropriate object, instead of the object itself. Ie: this is also valid:**
+
+```json
+{
+    "conversion_uri": <string - a url where a JSON object representing the conversion specifier may be downloaded>,
+    "data_uri": <string - a url where a JSON object representing your data to be converted may be downloaded>
+}
+```
+
 ##### [Next Topic: Non-OAuth access management (HTTP Basic, etc)](./Access_Mgmt.md)
 
 ##### [Previous Topic: Validation](./Validation.md)
