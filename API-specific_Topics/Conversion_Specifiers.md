@@ -120,9 +120,9 @@ Function names are always all-uppercase.
 
 For a list of available functions, see [Conversion Functions](./Conversion_functions.md).
 
-### Nesting replacement markers...
+### Nesting inline replacement markers...
 
-... is not allowed.
+... **is** allowed. This will work as expected.
 
 ### Referencing array indices within replacement markers
 

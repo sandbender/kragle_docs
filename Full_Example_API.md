@@ -52,7 +52,7 @@ Here is a sample request to the "GET /blocktypes" endpoint:
  'pagesize': 10,
  'blocktypes': [
      {'id': 2,
-      'name': 'Last Post on Delicious tagged...',
+      'name': 'Delicious - Last Post tagged...',
       'is_remote': True,
       'definition': 'https://raw.githubusercontent.com/sandbender/json_schema/master/block__delicious_tag_results_last.json',
       ...,
@@ -64,7 +64,7 @@ Here is a sample request to the "GET /blocktypes" endpoint:
 
 _NB: Most example "output", as is the case above, will be elided for clarity and/or for the sake of omitting data irrelevant to the examples._
 
-We see that there is a 'Last Post on Delicious tagged...' Block which we can use to retrieve the Delicious posts we're interested in working with, but there are no available HipChat Blocks. So in the next section, we'll show an example of creating a custom Block (along with an associated Type) which we can then use to "talk" to the HipChat service from our Stack.
+We see that there is a 'Delicious - Last Post tagged...' Block which we can use to retrieve the Delicious posts we're interested in working with, but there are no available HipChat Blocks. So in the next section, we'll show an example of creating a custom Block (along with an associated Type) which we can then use to "talk" to the HipChat service from our Stack.
 
 ### Custom Blocks - creating the "HipChat - Send Message to Room" Block
 
@@ -186,7 +186,7 @@ And now our new Block and it's associated Type are ready for us to use!
 
 Once we know what we want our Stack to do, and we've identified the available Blocks we can stack together to make that happen, we can use the "POST /blockstacks" endpoint to create our Stack.
 
-In the case of our Delicious -> HipChat example, we will use the "Last Post on Delicious tagged..." Block, and will stack it on top of the "HipChat - Send Message to Room" Block.
+In the case of our Delicious -> HipChat example, we will use the "Delicious - Last Post tagged..." Block, and will stack it on top of the "HipChat - Send Message to Room" Block.
 
 The main thing we need to know, aside from having chosen the Blocks we wish to use in our Stack, is the Type that each of our Blocks expects as input so that when stacking them together we can provide an appropriate [Conversion Specifier](./API-specific_Topics/Conversion_Specifiers.md) to provide the required input.
 
@@ -249,7 +249,7 @@ To put that all in context, here's how we will use our knowledge of the format o
 new_stack_payload = {
     'name': 'Send Delicious links to my coworkers on HipChat',
     'blocks': [
-        ['Last Post on Delicious tagged...', {'tag': 'coworkers'}],
+        ['Delicious - Last Post tagged...', {'tag': 'coworkers'}],
         ['HipChat - Send Message to Room', {'room_id': '1234567', 'auth_token': 'ABCDEF0987654321', 'content': 'New Link! \x01\x01/url\x02\x02'}]
     ]
 }
@@ -257,7 +257,7 @@ new_stack_payload = {
 
 Our stack is simply a list of Blocks which are executed in order, along with Conversion Specifiers used to transform their input into the appropriate Type that the Block expects. See the [API-specific Topics - Conversion Specifiers](./API-specific_Topics/Conversion_Specifiers.md) section of these docs for more information on Conversions.
 
-For our 'Last Post on Delicious tagged...' Block we specify a structure containing no replacement markers for conversion - this will be passed as-is, and is a valid 'Delicious Tag Search' which is the type that this Block expects.
+For our 'Delicious - Last Post tagged...' Block we specify a structure containing no replacement markers for conversion - this will be passed as-is, and is a valid 'Delicious Tag Search' which is the type that this Block expects.
 
 For our 'HipChat - Send Message to Room' Block, we pass a structure which contains the `room_id` and `auth_token` we need, as well as the `content` of the message, which contains a replacement marker. This replacement marker's contents, `/url`, refer to the "path" of a piece of data in the input it receives. Since the Delicious Block is stacked on top of it, the **output** Type of that Delicious Block is what will be used as input for this conversion. The output of our Delicious Block is a "Delicious Post" structure, which among other things contains a `url` property. The value of `url` from that "Delicious Post" output by the Delicious Block will be used as the value to replace in our conversion structure for the HipChat Block, and in this way we use the data output by the first block as input for the second.
 
