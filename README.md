@@ -58,8 +58,12 @@
     1. Local vs root references to source data
   1. [Conversion Functions](./API-specific_Topics/Conversion_Functions.md)
     1. TIMESTAMP
+    1. TIMESTAMP_FORMAT
     1. URLENCODE
     1. URLENCODE_PLUS
+    1. SPLIT_ON_CHAR
+    1. ADD
+    1. SUB
     1. *more to come*
 1. [API Reference](./API_Reference.md)
   1. [Authentication](./API_Reference/Authentication.md)
