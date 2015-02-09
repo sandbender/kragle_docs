@@ -37,6 +37,11 @@
       1. uri_get, uri_head, uri_post
         1. _with_headers variants
       1. convert
+      1. exclude_in
+      1. filter
+      1. take_first, take_last
+      1. take_head
+      1. take_tail
       1. *more to come*
   1. [Types are really just JSON Schema](./Advanced_Topics/Types.md)
     1. The Type schema
@@ -64,6 +69,7 @@
     1. SPLIT_ON_CHAR
     1. ADD
     1. SUB
+    1. HASH_MD5, HASH_SHA256, HASH_SHA512
     1. *more to come*
 1. [API Reference](./API_Reference.md)
   1. [Authentication](./API_Reference/Authentication.md)
