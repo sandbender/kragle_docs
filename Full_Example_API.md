@@ -101,21 +101,20 @@ We must also specify "state" parameters in our Block definition; in this case, s
 
 _For further details on how to use State within your custom Block definitions, see the [Advanced Topics - Creating Block types (State)](./Advanced_Topics/Creating_Block_Types.md#state) section of this documentation._
 
-Last but not least, we must specify what Types our new Block expects as input and output. 
+Last but not least, we must specify what Types our new Block expects as input and output. We specify `None` (JSON `null`) as the output type since we can ignore the output in this case, and 'HipChat - New Message for Room' as the input. This input Type is one which does not yet exist, that we will create in the next section.
 
-
-We've specified that our block should have one action, which makes the POST request to the appropriate HipChat api endpoint. We've also specified a body for the request which is a mix of static content and data which will come from the input to this block. You'll also notice that there is an 'auth_token' parameter to the HipChat url (for their auth), whose value also comes from what will be the input to this block, and we specified an explicit Content-Type header since we're using a 'form style' url-encoded values.
-
-Now we'll add this to a payload object for a request to create a new Block:
+Now that we have our Block definition ready, we setup the payload for our 'create Block' request, which contains a name for our new Block, and the definition:
 
 ```python
 >>> new_block_payload = {'name': 'HipChat - Send Message to Room', 'definition': hipchat_block_def}
 ```
 
-Next, before we create this Block let's validate it first to make sure there are no glaring errors. Conveniently, the validate endpoint takes exactly the same parameters as the 'live' create-Block endpoint, so we can use the same payload to first validate...
+Before we create this Block let's validate it first to make sure there are no glaring errors.
+
+Conveniently, the "validate" endpoint for Blocks takes exactly the same parameters as the 'create-Block' endpoint, so we can use the same payload to first validate our payload:
 
 ```python
->>> new_block_validation = requests.post('https://kragle.io/api/v1/validate/blocktypes', headers=post_headers, cookies=cookies, data=json.dumps(new_block_payload))
+>>> new_block_validation = requests.post('https://kragle.io/api/v1/validate/blocktypes', headers=body_headers, cookies=cookies, data=json.dumps(new_block_payload))
 >>> new_block_validation.json()
 {u'validated': True}
 ```
@@ -123,44 +122,52 @@ Next, before we create this Block let's validate it first to make sure there are
 Awesome, looks good! Let's create it for real:
 
 ```python
->>> new_block_result = requests.post('https://kragle.io/api/v1/blocktypes', headers=post_headers, cookies=cookies, data=json.dumps(new_block_payload))
+>>> new_block_result = requests.post('https://kragle.io/api/v1/blocktypes', headers=body_headers, cookies=cookies, data=json.dumps(new_block_payload))
 >>> new_block_result.json()
-{u'id': 3}
+{u'id': 4}
 ```
 
-Our new "Send message to HipChat room" Block has now been created, with a Block id of 3.
+Our new "Send message to HipChat room" Block has now been created, with a Block id of 4.
 
-#### Create a new Type which defines the input format for the Block we just created...
+#### Create a new Type - "HipChat - New Message for Room"
 
-Now that we have our block, we still need to create something else before we can use this in a Stack: for the input Type to the Block, we've specified `HipChat - New Message for Room`, which doesn't exist yet since we just made that up. In order for this Block to work, we'll need to create that Type:
+Now that we have our new HipChat Block, we still need to create something else before we can use this in a Stack: for the input Type to the Block, we've specified `HipChat - New Message for Room`, which doesn't exist yet since we just made that up. In order for this Block to work, we'll need to create that Type.
+
+By specifying the input Type that a Block uses, we will know how to convert other data Types into a structure usable as input for this Block, which Kragle will validate to ensure that your Block receives the data it expects. Conversely, by specifying the output Type we will have a known structure to use as input for a conversion when/if this Block gets stacked on another which expects a different Type as it's own input.
+
+Type definitions, unlike Block definitions, are JSON Schema and are used directly to validate a structure as an instance of the given Type.
+
+Here is the Type definition (schema) for our new "HipChat - New Message for Room" Type:
 
 ```python
->>> hipchat_message_to_room_type_definition = '''
-... {
-...     "$schema": "http://json-schema.org/draft-04/schema#",
-...     "title": "Kragle-data_type__hipchat_message_to_room-schema-v1.0",
-...     "type": "object",
-...     "properties": {
-...         "room_id": {"type": "string", "minLength": 1},
-...         "content": {"type": "string"},
-...         "auth_token": {"type": "string", "minLength": 1}
+>>> hipchat_message_to_room_type_definition = {
+...     '$schema': 'http://json-schema.org/draft-04/schema#',
+...     'title': 'Kragle-data_type__hipchat_message_to_room-schema-v1.0',
+...     'type': 'object',
+...     'properties': {
+...         'room_id': {'type': 'string', 'minLength': 1},
+...         'content': {'type': 'string'},
+...         'auth_token': {'type': 'string', 'minLength': 1}
 ...     },
-...     "required": ["room_id", "content", "auth_token"]
-... }'''
->>> hipchat_message_to_room_type_def_obj = json.loads(hipchat_message_to_room_type_definition)
+...     'required': ['room_id', 'content', 'auth_token']
+... }
+>>> 
 ```
 
-Our new type is a JSON Schema, like all Types, and says that an object which validates as this Type must have:
+Our new Type says that a validating object must have:
+
 1. a property named 'room_id' which is a string, at least one character in length.
 1. a property named 'auth_token', which is also a min-length-1 string.
 1. a property named 'content', which is a string of any length.
 
-Once again, let's create the create-Type payload and validate it first to make sure it's sane:
+You'll note that the structure we've defined here ensures that an example of this Type will contain the information we've referred to in the replacement markers of our Block definition. For example, in our Block definition for "HipChat - Send Message to Room" we specified 'https://api.hipchat.com/v1/rooms/message?auth_token=\x01\x01/input/auth_token\x02\x02&format=json' as the uri to POST to. The substring `\x01\x01/input/auth_token\x02\x02` will be replaced with the `auth_token` element of the `input` object to this Block. The new Type we just defined contains `auth_token` as a required element, and so by specifying "HipChat - New Message for Room" as the expected input type to our Block, and then creating that Type with `auth_token` as a required element, we've ensured that when our Block is executed, the input it receives will contain the data necessary to convert this uri "template" into a usable value with the appropriate auth token.
+
+Once again, let's create the Type payload and validate it first to make sure it's sane:
 
 ```python
->>> new_type_payload = {'name': 'HipChat - New Message for Room', 'definition': hipchat_message_to_room_type_def_obj}
+>>> new_type_payload = {'name': 'HipChat - New Message for Room', 'definition': hipchat_message_to_room_type_definition}
 >>> 
->>> new_type_validation = requests.post('https://kragle.io/api/v1/validate/types', headers=post_headers, cookies=cookies, data=json.dumps(new_type_payload))
+>>> new_type_validation = requests.post('https://kragle.io/api/v1/validate/types', headers=body_headers, cookies=cookies, data=json.dumps(new_type_payload))
 >>> new_type_validation.json()
 {u'validated': True}
 ```
@@ -170,7 +177,7 @@ Great! Now let's create the new type:
 ```python
 >>> new_type_result = requests.post('https://kragle.io/api/v1/types', headers=post_headers, cookies=cookies, data=json.dumps(new_type_payload))
 >>> new_type_result.json()
-{u'id': 13}
+{u'id': 14}
 ```
 
 And now our new Block and it's associated Type are ready for us to use!
