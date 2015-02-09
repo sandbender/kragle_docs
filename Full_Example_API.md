@@ -12,6 +12,57 @@ In this example, we'll create a connection between a Delicious.com account and a
 
 We want to have Kragle post a message to the Hipchat room, which contains some of our coworkers, whenever we post a new url to Delicious that's tagged with "coworkers".
 
+### Creating Stacks vs. Custom Blocks and Types
+
+There are two parts to this walkthrough - the first involves creating custom Blocks and associated Types, when the action you want does not already exist as a Block in Kragle. The second part involves using Blocks (whether pre-existing or your own freshly created custom Blocks) to make a Stack that does what we want.
+
+If you are you only interested in creating Stacks from predefined Blocks, you can skip down to the second section titled [Creating a Stack](#stack_creation). Otherwise, read on for an introduction to creating your own Kragle functionality with custom Blocks and Types.
+
+### Starting off - Authentication
+
+Before we do anything else, we will need to authenticate against the API to get an auth ticket cookie we can use for subsequent requests, since many of the endpoints we will call require authenticated requests:
+
+```python
+>>> import requests
+>>> import json
+>>>
+>>> body_headers = {'content-type': 'application/json'}
+>>>
+>>> login_payload = {'username': 'SandbenderCa', 'password': 'itsapassword'}
+>>>
+>>> response = requests.post('https://kragle.io/api/v1/authenticate', headers=body_headers, data=json.dumps(login_payload))
+>>>
+>>> cookies = response.cookies.get_dict('kragle.io')
+>>> cookies
+{'auth_tkt': '"11111111111111122222222222222222222223333333333333334444444444444445555555555555555666666666666666667777777777777788888888888888999990000!userid_type:int"'}
+```
+
+We have also setup a dict called `body_headers` which we will use in later requests that send JSON data to the endpoint, and once authenticated successfully, we receive an `auth_tkt` cookie which we can pass to subsequent requests.
+
+### Listing available Blocks
+
+When browsing Blocks through the API, we can use the "GET /blocktypes" endpoint to list any available Blocks that we can use in our Stack creations. In the case of our Delicious -> HipChat example, we will need a few different Blocks: one to retrieve recent Delicious posts that have a certain tag, and one to send a message to a HipChat room.
+
+Here is a sample request to the "GET /blocktypes" endpoint:
+
+```python
+>>> requests.get('https://kragle.io/api/v1/blocktypes?show_resolved=1', cookies=cookies).json()
+{'count': 1,
+ 'page': 1,
+ 'pagesize': 10,
+ 'blocktypes': [
+     {'id': 2,
+      'name': 'Last Post on Delicious tagged...',
+      'is_remote': True,
+      'definition': 'https://raw.githubusercontent.com/sandbender/json_schema/master/block__delicious_tag_results_last.json',
+      ...,
+      'resolved': {'io': {'input': 'Delicious Tag Search', 'output': 'Delicious Post'}, ...}}]}
+```
+
+### Custom Blocks - creating the "HipChat - Send Message to Room" Block
+
+
+
 To start off with, we'll need to setup some basics and authenticate to get a session auth cookie from Kragle:
 
 ```python
