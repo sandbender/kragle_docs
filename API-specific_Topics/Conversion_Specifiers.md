@@ -114,15 +114,35 @@ It is also possible to reference one of a set of predefined functions with a rep
 
 To call a function in this way, the first character of the replacement path must be `%` instead of `/`. When this is the case, the string following the `%` is the function call, following this format:
 
-`FUNCTION_NAME([<arg> [, <arg2> [...]]])`
+`FUNCTION_NAME(['<arg>' [, '<arg2>' [...]]])`
 
-Function names are always all-uppercase.
+Function names are always all-uppercase, and arguments to functions appear inside parentheses immediately following the function name.
+
+Function arguments are separated by commas, and function arguments should always be passed as strings, ie: quoted with single quotes, even when their values are numeric.
 
 For a list of available functions, see [Conversion Functions](./Conversion_functions.md).
 
 ### Nesting inline replacement markers...
 
 ... **is** allowed. This will work as expected.
+
+For example, given the following string containing a replacement marker (JSON):
+
+```json
+"\u0001\u0001%URLENCODE_PLUS('Hello, \u0001\u0001/place\u0002\u0002!')\u0002\u0002"
+```
+
+and this "source" data for the conversion:
+
+```json
+{"place": "beautiful world"}
+```
+
+The resulting string will look like this:
+
+```json
+"""Hello%2C+beautiful+world%21"""
+```
 
 ### Referencing array indices within replacement markers
 
