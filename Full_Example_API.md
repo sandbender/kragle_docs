@@ -294,6 +294,20 @@ We now go to our HipChat window/app, and see that a new message with the appropr
 
 Success!
 
+### Where to go from here...
+
+Once you've tested your new Stack successfully, you can use the Schedule endpoints to list the available Schedules under which your Stack can be setup to run (every 15 mins, etc).
+
+The Jobs endpoints can then be used to create a Job, which ties a Stack to a specific Schedule and (optionally) activates it to be run according to the schedule in question.
+
+Job and Schedule operations will be left as an excercise for the reader.
+
+We also encourage you to explore other areas of the API and documentation to see what's possible and browse all the available functionality. For example, there are a (constantly growing) number of different **functions** available for use in Conversion Specifiers, and different Actions you can use when creating your own Blocks as well.
+
+If you skipped over the "Creating Custom Blocks and Types" sections of this page, now would be a good time to revisit those areas if that interests you - and we hope it will!
+
+You can always use the support features on the site to send us questions, feature requests, and report bugs if you happen to find any!
+
 ##### [Previous Topic: Faults and Error Codes](./API_Reference/Faults.md)
 
 ### [Back to Table of Contents](./README.md)
