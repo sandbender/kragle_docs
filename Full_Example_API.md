@@ -16,8 +16,6 @@ We want to have Kragle post a message to the Hipchat room, which contains some o
 
 There are two parts to this walkthrough - the first involves creating custom Blocks and associated Types, when the action you want does not already exist as a Block in Kragle. The second part involves using Blocks (whether pre-existing or your own freshly created custom Blocks) to make a Stack that does what we want.
 
-If you are you only interested in creating Stacks from predefined Blocks, you can skip down to the second section titled [Creating a Stack](#stack_creation). Otherwise, read on for an introduction to creating your own Kragle functionality with custom Blocks and Types.
-
 ### Starting off - Authentication
 
 Before we do anything else, we will need to authenticate against the API to get an auth ticket cookie we can use for subsequent requests, since many of the endpoints we will call require authenticated requests:
@@ -38,6 +36,8 @@ Before we do anything else, we will need to authenticate against the API to get 
 ```
 
 We have also setup a dict called `body_headers` which we will use in later requests that send JSON data to the endpoint, and once authenticated successfully, we receive an `auth_tkt` cookie which we can pass to subsequent requests.
+
+**If you are only interested in creating Stacks from predefined Blocks, you can skip down to the second section titled [Creating a Stack](#stack_creation). Otherwise, read on for an introduction to creating your own Kragle functionality with custom Blocks and Types.**
 
 ### Listing available Blocks
 
