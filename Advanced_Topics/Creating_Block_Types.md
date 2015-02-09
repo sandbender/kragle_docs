@@ -132,7 +132,7 @@ Full details on how the 'convert' mechanism works are provided later under the A
 
 ##### THE INPUT
 
-This element corresponds to whatever data structure the previous Block in the STack (if this is the first Action in a Block) or previous Action in the Block (all subsequent Actions in the Block) produced as output.
+This element corresponds to whatever data structure the previous Block in the Stack (if this is the first Action in a Block) or previous Action in the Block (all subsequent Actions in the Block) produced as output.
 
 ##### INPUT STATE FROM THE LAST RUN
 

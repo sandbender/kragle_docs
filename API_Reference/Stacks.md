@@ -143,7 +143,7 @@ On success, the id of the newly created Stack is returned in a JSON object like 
   - `blocks` - array - An ordered list of Blocks from which to build the Stack. Each Block should be represented as an array, with elements corresponding to the following indexes:
     - **Required indexes**:
       - `0` - string - The first element in a 'Block array' for a new Stack must be the name of the Block to use.
-      - `1` - <anything> - The next element must be a conversion specifier, indicating how to translate the input this Block will receive into the Type it expects, as defined by the 'io["input"]' element of the definition for this kind of Block.
+      - `1` - <anything> - The next element must be a conversion specifier, indicating how to translate the input this Block will receive into the Type it expects, as defined by the 'io["input"]' element of the definition for this kind of Block. 
     - **Optional indexes**:
       - `2` - object - An object containing zero or more of the following optional parameters for the new instance of this block:
         - `name` - string - An identifier for this particular instance of the Block (ie: specific to **this** Block in **this** Stack.

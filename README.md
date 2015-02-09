@@ -1,4 +1,4 @@
-![Kragle.io Logo](http://bit.ly/1EgMjSQ "Kragle.io Logo")
+![Kragle.io Logo](http://bit.ly/1zzpdnN "Kragle.io Logo")
 
 # Kragle.io Documentation
 

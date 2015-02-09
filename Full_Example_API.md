@@ -84,7 +84,7 @@ Unfortunately, we see no HipChat Blocks ready-made. Luckily, this is not an issu
 ...     u'actions': [
 ...         {u'action': u'uri_post',
 ...          u'action_params': {
-...              u'body': u'room_id=\x01\x01/input/room_id\x02\x02&from=Delicious+Kragle&message=\x01\x01%URLENCODE_PLUS(\x01\x01/input/content\x02\x02)\x02\x02',
+...              u'body': u'room_id=\x01\x01/input/room_id\x02\x02&from=Kragle&message=\x01\x01%URLENCODE_PLUS('\x01\x01/input/content\x02\x02')\x02\x02',
 ...              u'headers': {'content-type': 'application/x-www-form-urlencoded'},
 ...              u'response_type': u'json',
 ...              u'uri': u'https://api.hipchat.com/v1/rooms/message?auth_token=\x01\x01/input/auth_token\x02\x02&format=json'}}],
@@ -174,7 +174,7 @@ Now that we have all the pieces we need for our Stack, let's set it up. Here's t
 ...     'name': 'Send Delicious links to my coworkers on HipChat',
 ...     'blocks': [
 ...         ['Last Post on Delicious tagged...', {'tag': 'coworkers'}],
-...         ['HipChat - Send Message to Room', {'room_id': '1234567', 'auth_token': 'ABCDEF0987654321', 'content': 'New Link! \x01\x01/input/url\x02\x02'}]
+...         ['HipChat - Send Message to Room', {'room_id': '1234567', 'auth_token': 'ABCDEF0987654321', 'content': 'New Link! \x01\x01/url\x02\x02'}]
 ...     ]
 ... }
 ```
