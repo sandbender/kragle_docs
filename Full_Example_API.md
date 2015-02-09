@@ -182,7 +182,7 @@ Great! Now let's create the new type:
 
 And now our new Block and it's associated Type are ready for us to use!
 
-#### Put it all together - make a Stack!
+#### <a name='stack_creation'></a>Creating a Stack
 
 Now that we have all the pieces we need for our Stack, let's set it up. Here's the payload we'll use to create the stack:
 
