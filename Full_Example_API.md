@@ -56,79 +56,19 @@ Here is a sample request to the "GET /blocktypes" endpoint:
       'is_remote': True,
       'definition': 'https://raw.githubusercontent.com/sandbender/json_schema/master/block__delicious_tag_results_last.json',
       ...,
-      'resolved': {'io': {'input': 'Delicious Tag Search', 'output': 'Delicious Post'}, ...}}]}
+      'resolved': {'io': {'input': 'Delicious Tag Search', 'output': 'Delicious Post'}, ...}
+     }
+ ]
+}
 ```
+
+_NB: Most example "output", as is the case above, will be elided for clarity and/or for the sake of omitting data irrelevant to the examples._
+
+We see that there is a 'Last Post on Delicious tagged...' Block which we can use to retrieve the Delicious posts we're interested in working with, but there are no available HipChat Blocks. So in the next section, we'll show an example of creating a custom Block (along with an associated Type) which we can then use to "talk" to the HipChat service from our Stack.
 
 ### Custom Blocks - creating the "HipChat - Send Message to Room" Block
 
-
-
-To start off with, we'll need to setup some basics and authenticate to get a session auth cookie from Kragle:
-
-```python
->>> import requests
->>> import json
->>> import pprint
->>>
->>> post_headers = {'content-type': 'application.json'}
->>>
->>> login_payload = {'username': 'SandbenderCa', 'password': 'itsapassword'}
->>>
->>> response = requests.post('https://kragle.io/api/v1/authenticate', headers=post_headers, data=json.dumps(login_payload))
->>>
->>> cookies = response.cookies.get_dict('kragle.io')
->>> cookies
-{'auth_tkt': '"11111111111111122222222222222222222223333333333333334444444444444445555555555555555666666666666666667777777777777788888888888888999990000!userid_type:int"'}
-```
-
-We setup a `post_headers` dict to use when making post requests (Content-Type), and make a request to the authentication endpoint to get our cookie. We also import the libraries we'll be using: requests, json and pprint.
-
-#### Get a list of available Blocks to see how we can connect to Delicious...
-
-Next, we make a call to the `/blocktypes` endpoint to see what's available:
-
-```python
->>> pprint.pprint(requests.get('https://kragle.io/api/v1/blocktypes?show_resolved=1', cookies=cookies).json())
-{u'blocktypes': [{u'definition': u'https://raw.githubusercontent.com/sandbender/json_schema/master/block__delicious_tag_results_last.json',
-                  u'id': 2,
-                  u'is_approved': False,
-                  u'is_remote': True,
-                  u'name': u'Last Post on Delicious tagged...',
-                  u'needs_approval': False,
-                  u'owner': 3,
-                  u'resolved': {u'actions': [{u'action': u'uri_get',
-                                              u'action_params': {u'auth_required': True,
-                                                                 u'auth_type': u'strategy',
-                                                                 u'response_type': u'xml',
-                                                                 u'uri': u'https://api.del.icio.us/v1/posts/get?tag=\x01\x01/input/tag\x02\x02&meta=yes'}},
-                                             {u'action': u'convert',
-                                              u'action_params': {u'conversion': [u'\x01',
-                                                                                 u'\x01/input/_children',
-                                                                                 {u'description': u'\x01/description',
-                                                                                  u'hash': u'\x01/hash',
-                                                                                  u'tags': u"\x01%SPLIT_ON_CHAR('\x01\x01/tag\x02\x02', ' ')",
-                                                                                  u'url': u'\x01/href'}]}},
-                                             {u'action': u'exclude_in',
-                                              u'action_params': {u'element_path': u'/hash',
-                                                                 u'exclusions': u'\x01/output_state/hashes'}},
-                                             {u'action': u'take_last',
-                                              u'action_params': {}}],
-                                u'initial_state': {u'input': {},
-                                                   u'output': {u'hashes': []}},
-                                u'io': {u'input': u'Delicious Tag Search',
-                                        u'output': u'Delicious Post'},
-                                u'state': {u'input': {},
-                                           u'output': {u'hashes': [u'\x01/hash']}}}}],
- u'count': 1,
- u'page': 1,
- u'pagesize': 10}
-```
-
-Ah, exactly what we need, a Block which will return the last Delicious post (for my account) with a given Tag!
-
-#### Create the needed HipChat Block type so we can send messages to HipChat rooms via Kragle...
-
-Unfortunately, we see no HipChat Blocks ready-made. Luckily, this is not an issue - we can simply create a "HipChat - Send Message to Room" block, like so:
+In order to create a custom Block, the main thing we need to do is create it's "definition" structure. This structure must conform to the JSON Schema for a Block Type. The following example is such a structure that we will create as the definition of our custom Block which will send a message to a HipChat room:
 
 ```python
 >>> hipchat_block_def = {
@@ -144,6 +84,10 @@ Unfortunately, we see no HipChat Blocks ready-made. Luckily, this is not an issu
 ...     u'state': {u'input': {}, u'output': {}}}
 >>>
 ```
+
+_For those who are interested in the schema for a Block, it is currently available here: [Block Type Schema](https://raw.githubusercontent.com/sandbender/json_schema/master/block_type.json)._
+
+
 
 We've specified that our block should have one action, which makes the POST request to the appropriate HipChat api endpoint. We've also specified a body for the request which is a mix of static content and data which will come from the input to this block. You'll also notice that there is an 'auth_token' parameter to the HipChat url (for their auth), whose value also comes from what will be the input to this block, and we specified an explicit Content-Type header since we're using a 'form style' url-encoded values.
 

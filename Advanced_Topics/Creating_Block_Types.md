@@ -138,7 +138,7 @@ This element corresponds to whatever data structure the previous Block in the St
 
 This element will correspond to the 'input' state structure which was saved the last time this Block **instance** executed. Note that there's a difference between an instance of a Block (ie: a "copy" of a Block that is part of an active Stack) and the Block itself (a type which is not specific to a stack/etc).
 
-See the State section below for more details.
+See the [State](#state) section below for more details.
 
 ##### OUTPUT STATE FROM THE LAST RUN
 
@@ -156,7 +156,7 @@ The 'basic' auth type indicates HTTP Basic authorization should be used - you wi
 
 **NB**: HTTP Basic auth is highly discouraged - the vast majority of public sites & services today use some variant of OAuth - much more secure and configurable access-wise than something simple like HTTP Basic.
 
-### State
+### <a name='state'></a>State
 
 You will often want to save data in between executions of a Stack. For example, when searching for hashtag results from Twitter you will likely only want results that are new since the last time the Stack in question was run, and so you may want to save the post ID of the most recent tweet your stack has seen and use that to restrict your results next time.
 
@@ -166,7 +166,7 @@ State is saved on a per-Block-instance basis, so you could theoretically have tw
 
 The 'state' structure (a top level element of your Block's 'definition' structure) is used to specify what data from the input or output of the block you wish to save for use during the next execution of the Block. ('state' structure is described below)
 
-Just like action parameters, the State structure you specify uses the 'convert' mechanism to replace placeholders in the structure with corresponding data from the input or output of a block.
+Just like action parameters, the State structure you specify uses the 'convert' mechanism to replace placeholders in the structure with corresponding data from the input or output of a block. Full details on how the 'convert' mechanism works are provided later under the API-specific Topic [Conversion Specifiers](../API-specific_Topics/Conversion_Specifiers.md).
 
 Any placeholders in the 'input' section of your state structure will be replaced with the corresponding elements from whatever structure was the 'raw' input to the block. Likewise, any placeholders in the 'output' section of your state structure will be replaced with the corresponding elements from whatever data structure was output by this block.
 
