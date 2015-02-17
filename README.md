@@ -1,6 +1,6 @@
 ![Kragle.io Logo](http://bit.ly/1zzpdnN "Kragle.io Logo")
 
-Stack your favourite sites together like building blocks, and have actions at one site trigger actions on others automatically.
+## Stack your favourite sites together like building blocks, and have actions at one site trigger actions on others automatically.
 
 # Kragle.io Documentation
 
