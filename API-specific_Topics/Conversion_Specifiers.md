@@ -190,7 +190,7 @@ In the example above, you may have noticed that the path for the 'id' element st
 
 It is **important to note** that you can nest array references - ie: inside the conversion specifier for each element of the array you're referencing, you can have further array references.
 
-**However**... the path of an array reference **always** refers to the 'local' root, ie: relative to the current array element, regardless of the number of slashes it begins with... when used as an array reference, `"/path"` and `"//path"` **both** refer to the 'path' value in the current array element being processed, even though the former only has a single slash and would normally be to a 'root' reference.
+**However**... the path of an array reference in an include-and-convert reference, ie: in an array beginning with a single `\u0001`, the second element... **always** refers to the 'local' root, ie: relative to the current array element, regardless of the number of slashes it begins with... when used as an array reference, `"/path"` and `"//path"` **both** refer to the 'path' value in the current array element being processed, even though the former only has a single slash and would normally be to a 'root' reference.
 
 At the top level of a conversion specifier, ie: without already having entered an array reference, the 'local root' is implied to be the same as the actual root of 'source' - that is, the path of a non-nested array reference **always** refers to the root of a 'source' structure, while a nested array reference is **always** relative to the current array element being converted.
 
