@@ -158,6 +158,8 @@ It will eventually happen that you wish to **convert** the **contents** of an ar
 
 `["\u0001", "\u0001/root/my_array", {"this is an array conversion specifier": "\u0001//id", "stamp": "\u0001/timestamp"}]`
 
+(Note that the 0 index is an integer in the latter example, vs. the string '0' in the former.)
+
 To include **and** convert an array from 'source', you specify an array whose first element is a string consisting of a single `0x01` character, the second element is a reference to the array in 'source' you wish to convert, and the third element is the conversion you wish to apply to **each** element of the array in 'source'.
 
 If the above sample array reference is used as a conversion specifier with the following as 'source' data:
