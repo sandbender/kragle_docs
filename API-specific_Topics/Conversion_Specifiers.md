@@ -36,9 +36,9 @@ The replacement values come from the data 'source' for the conversion. The actua
 
 The characters we use to indicate our placeholders are regular ASCII non-printing characters: `SOH` (`0x01`, "Start of Header") and `STX` (`0x02`, "Start of Text").
 
-Any sub-strings in a string which are prefixed with `\x01\x01` **and** suffixed with `\x02\x02` is an inline replacement marker - the substring will be replaced with the referenced value from the 'source' data and the result is a string with that substring replaced inline.
-
 A whole string which begins with `\x01` is a regular replacement marker - in the final structure returned from the conversion, these will be replaced with the referenced value from the 'source' data, whateve it is (object/array/string/etc).
+
+Any sub-strings in a string which are prefixed with `\x01\x01` **and** suffixed with `\x02\x02` is an inline replacement marker - the substring will be replaced with the referenced value from the 'source' data and the result is a string with that substring replaced inline.
 
 The **contents** of the replacement markers (text in between `\x01\x01` and `\x02\x02` for an inline replacement, or the rest of the string following `\x01` for a regular replacement, refers to a value (usually in the 'source' data) by path, which is to replace the marker.
 
