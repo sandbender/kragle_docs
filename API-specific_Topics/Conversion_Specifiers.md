@@ -152,13 +152,13 @@ In order to be able to reference a numeric array index in the 'source' data, the
 
 `"\u0001/my_array/\u00010/something_important"` references `obj['my_array'][0]['something_important']`.
 
+(Note that the 0 index is an integer in the latter example, vs. the string '0' in the former.)
+
 ### Converting arrays in 'source' to arrays in the final structure
 
 It will eventually happen that you wish to **convert** the **contents** of an array in your 'source' data, instead of just referencing and including an array from 'source' verbatim. This requires a special syntax:
 
 `["\u0001", "\u0001/root/my_array", {"this is an array conversion specifier": "\u0001//id", "stamp": "\u0001/timestamp"}]`
-
-(Note that the 0 index is an integer in the latter example, vs. the string '0' in the former.)
 
 To include **and** convert an array from 'source', you specify an array whose first element is a string consisting of a single `0x01` character, the second element is a reference to the array in 'source' you wish to convert, and the third element is the conversion you wish to apply to **each** element of the array in 'source'.
 
