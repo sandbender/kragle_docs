@@ -115,6 +115,9 @@ The provided data resulted in an internal error while attempting to validate aga
 ### Code: 23
 ##### One of the specified Blocks used in your Stack does not exist, or does not belong to you and is not public.
 
+### Code: 24
+##### The specified Stack used in your Job does not exist, or does not belong to you and is not public.
+
 ##### [Next Topic: A Full Example/Walkthrough via the API](../Full_Example_API.md)
 
 ##### [Previous Topic: Non-OAuth access management](./Access_Mgmt.md)
