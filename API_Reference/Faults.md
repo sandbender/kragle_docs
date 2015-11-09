@@ -112,6 +112,9 @@ The provided data resulted in an internal error while attempting to validate aga
 ### Code: 22
 ##### You passed a non-existent Block type in your list of Blocks for a Stack.
 
+### Code: 23
+##### One of the specified Blocks used in your Stack does not exist, or does not belong to you and is not public.
+
 ##### [Next Topic: A Full Example/Walkthrough via the API](../Full_Example_API.md)
 
 ##### [Previous Topic: Non-OAuth access management](./Access_Mgmt.md)

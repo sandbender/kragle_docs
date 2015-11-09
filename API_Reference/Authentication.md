@@ -9,6 +9,20 @@
 ## API Reference - Authentication endpoints
 
 
+### POST /authenticate
+
+_(This endpoint does **not** require authentication)_
+
+Authenticate against the Kragle api. A successful response will be: `{'code': 0, 'user_id': <your user id>}` and will have a 200 HTTP response code as usual.
+
+*NB*: The response headers are relevant - you will need the cookie returned by a successful authenticate call whose value is a json string containing `auth_tkt`. You may or may not need to do this manually, depending on the HTTP library/code you're using.
+
+**Required parameters**:
+  - `password` - string - Your password.
+  - `email` - string - The email address associated with your account.
+    - Either email OR username are required, not both. If both are provided, username is used/takes precedence.
+  - `username` - string - Your Kragle username (or Twitter screen name if your account was created via "Sign in with Twitter", etc)
+
 #### Notes regarding authentication for Block actions
 
 If you are creating a Stack through the API which uses a block that needs OAuth credentials for a request, you'll need to grant Kragle authorization to access your account before the Stack will work. See [The Basics - Blocks](../The_Basics/Blocks.md)
@@ -22,18 +36,6 @@ https://kragle.io/oauth/redirect/<domain>
 ```
 
 ... where `domain` is the hostname (domain name) of the url for which your Kragle Stacks require access.
-
-### POST /authenticate
-
-_(This endpoing does **not** require authentication)_
-
-Authenticate against the Kragle api. A successful response will be: `{'code': 0, 'user_id': <your user id>}` and will have a 200 HTTP response code as usual.
-
-**Required parameters**:
-  - `password` - string - Your password.
-  - `email` - string - The email address associated with your account.
-    - Either email OR username are required, not both. If both are provided, username is used/takes precedence.
-  - `username` - string - Your Kragle username (or Twitter screen name if your account was created via "Sign in with Twitter", etc)
 
 ##### [Next Topic: Blocks](./Blocks.md)
 
