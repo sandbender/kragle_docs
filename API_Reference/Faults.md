@@ -121,6 +121,12 @@ The provided data resulted in an internal error while attempting to validate aga
 ### Code: 25
 ##### The specified Schedule used in your Job does not exist, or does not belong to you and is not public.
 
+### Code: 26
+##### The specified config element for the Schedule you are trying to create is invalid.
+
+### Code: 27
+##### The Schedule you are trying to update still has Jobs which reference it - cannot update!
+
 ##### [Next Topic: A Full Example/Walkthrough via the API](../Full_Example_API.md)
 
 ##### [Previous Topic: Non-OAuth access management](./Access_Mgmt.md)

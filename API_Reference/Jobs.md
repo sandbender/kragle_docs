@@ -28,7 +28,9 @@ Results are returned as a JSON response body, following this format:
             "name": <human readable name for this job>,
             "stack": <the id of the Stack to which this job applies>,
             "schedule": <the id of the Schedule that this job uses>,
-            "do_run": <boolean indicating whether the job is active>
+            "next_run": <timestamp of the target next run time for the stack>,
+            "do_run": <boolean indicating whether the job is active>,
+            "do_del": <boolean indicating whether the job is queued for deletion>
         },
         ...
     }
@@ -55,7 +57,9 @@ The job is returned as a JSON response body following this format:
     "name": <human readable name for this job>,
     "stack": <the id of the Stack to which this job applies>,
     "schedule": <the id of the Schedule that this job uses>,
-    "do_run": <boolean indicating whether the job is active>
+    "next_run": <timestamp of the target next run time for the stack>,
+    "do_run": <boolean indicating whether the job is active>,
+    "do_del": <boolean indicating whether the job is queued for deletion>
 }
 ```
 
@@ -103,6 +107,7 @@ On success, a JSON object is returned as the response body, following this forma
     "name": <human-readable name of the Job>,
     "stack": <the id of the Stack to which this Job is attached>,
     "schedule": <the id of the Schedule which this Job uses>,
+    "next_run": <timestamp of the target next run time for the stack>,
     "do_run": <boolean indicating whether this Job is currently active or not>,
     "do_del": <boolean indicating whether this Job is currently queued for deletion>
 }
