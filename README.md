@@ -1,4 +1,4 @@
-![Kragle.io Logo](http://bit.ly/1zzpdnN "Kragle.io Logo")
+<img alt="Kragle.io Logo" src="http://bit.ly/1zzpdnN" width="100">
 
 ## Stack your favourite sites together like building blocks, and have actions at one site trigger actions on others automatically.
 
